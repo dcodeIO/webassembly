@@ -1,4 +1,4 @@
-var http  = require("https"),
+var http  = require('follow-redirects').https,
     chalk = require("chalk"),
     path  = require("path"),
     fs    = require("fs"),
@@ -12,20 +12,20 @@ var platform = process.platform + "-" + process.arch,
     temp = tmp.fileSync({ prefix: "wa-tools-" }),
     file = fs.createWriteStream(temp.name),
     bindir = path.join(__dirname, "..", "tools", "bin", platform),
-    archive = "tools-" + platform + (process.platform === "win32" ? ".zip" : ".tar.gz");
+    archive = "tools-" + platform + (/^win32/.test(platform) ? ".zip" : ".tar.gz");
 
 function download(callback) {
     var req = http.get("https://github.com/dcodeIO/webassembly/releases/download/" + pkg.tools + "/" + archive, res => {
         if (res.statusCode !== 200) {
             req.abort();
-            callback(Error("no prebuilt binaries available for " + platform));
+            callback(Error("no prebuilt binaries available for " + platform + " (code " + res.statusCode + ")"));
             return;
         }
         res.on("error", function(err) {
             callback(err);
         });
         res.on("end", function() {
-            callback(null, temp.file);
+            callback(null, temp.name);
         });
         res.pipe(file);
     });
