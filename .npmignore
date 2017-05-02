@@ -1,0 +1,11 @@
+.vscode/
+node_modules/
+npm-debug.*
+sandbox/
+tools/bin/*
+
+tools/llvm
+tools/clang
+tools/compiler-rt
+tools/binaryen
+lib/musl

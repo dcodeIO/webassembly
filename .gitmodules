@@ -1,0 +1,15 @@
+[submodule "tools/llvm"]
+	path = tools/llvm
+	url = https://github.com/llvm-mirror/llvm.git
+[submodule "tools/binaryen"]
+	path = tools/binaryen
+	url = https://github.com/dcodeIO/binaryen.git
+[submodule "tools/compiler-rt"]
+	path = tools/compiler-rt
+	url = https://github.com/llvm-mirror/compiler-rt.git
+[submodule "tools/clang"]
+	path = tools/clang
+	url = https://github.com/llvm-mirror/clang.git
+[submodule "lib/musl"]
+	path = lib/musl
+	url = git://git.musl-libc.org/musl

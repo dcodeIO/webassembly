@@ -1,0 +1,43 @@
+{
+    "configurations": [
+        {
+            "name": "Mac",
+            "includePath": [
+                "../include"
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": "",
+                "path": [
+                    "../include"
+                ]
+            }
+        },
+        {
+            "name": "Linux",
+            "includePath": [
+                "../include"
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": "",
+                "path": [
+                    "../include"
+                ]
+            }
+        },
+        {
+            "name": "Win32",
+            "includePath": [
+                "../include"
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": "",
+                "path": [
+                    "../include"
+                ]
+            }
+        }
+    ]
+}

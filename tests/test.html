@@ -1,0 +1,38 @@
+<script src="../dist/webassembly.js"></script>
+<script>
+var exports,
+    env;
+
+webassembly.load("test.wasm").then(function(module) {
+    console.log(module);
+    exports = module.exports;
+    env = module.env;
+    console.log("1. Open the console");
+    console.log("2. Begin typing \"exports.\" or \"env.\" to access them.");
+});
+
+// ignore this
+function mem() {
+    var mem = env.memory.U8,
+        ptr = env.memory.U32[1],
+        sb  = [];
+    console.log("stack ptr> " + ptr.toString(16));
+    for (var i = 0; i < 64 * 1024; ++i) {
+        var s;
+        if ((i%16) === 0) {
+            s = i.toString(16);
+            while (s.length < 4) s = "0" + s;
+            if (i > 0) sb.push("\n");
+            sb.push(s + ": ");
+        } else
+            sb.push(" ");
+        s = mem[i].toString(16);
+        if (s.length < 2) s = "0" + s;
+        if (i === ptr)
+            sb[sb.length-1] = ">" + s;
+        else
+            sb.push(s);
+    }
+    console.log(sb.join(""));
+}
+</script>

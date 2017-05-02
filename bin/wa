@@ -1,0 +1,46 @@
+#!/usr/bin/env node
+var chalk = require("chalk"),
+    pkg = require("../package.json");
+
+var cmd = process.argv[2];
+process.argv.splice(2, 1);
+switch (cmd) {
+    case "assembler":
+    case "assemble":
+    case "as":
+    case "a":
+        require("./wa-assemble");
+        break;
+    case "compiler":
+    case "compile":
+    case "comp":
+    case "c":
+        require("./wa-compile");
+        break;
+    case "disassembler":
+    case "disassemble":
+    case "dis":
+    case "d":
+        require("./wa-disassemble");
+        break;
+    case undefined:
+        process.stderr.write([
+            "webassembly v" + pkg.version + " Command line utilities",
+            "",
+            chalk.bold.white("Compiles, assembles and disassembles WebAssembly modules."),
+            "",
+            "For command specific usage instructions, type:",
+            "",
+            "  wa compile       " + chalk.gray.bold("or") + "   wa-compile",
+            "  wa assemble      " + chalk.gray.bold("or") + "   wa-assemble",
+            "  wa disassemble   " + chalk.gray.bold("or") + "   wa-disassemble",
+            "",
+            "usage: " + chalk.bold.cyan("wa") + " <compile|assemble|disassemble> [options] file",
+            ""
+        ].join("\n"));
+        process.exit(1);
+        break;
+    default:
+        process.stderr.write(chalk.red.bold("FAILED") + " No such command: " + cmd + "\n");
+        break;
+}

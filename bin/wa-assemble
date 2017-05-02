@@ -1,0 +1,2 @@
+#!/usr/bin/env node
+require("../cli/assembler").main(process.argv.slice(2));

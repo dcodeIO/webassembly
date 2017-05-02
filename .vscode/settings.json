@@ -1,0 +1,6 @@
+{
+    "wast.wabtPath": "../tools",
+    "files.associations": {
+        "*.inc": "cpp"
+    }
+}
