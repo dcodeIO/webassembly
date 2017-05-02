@@ -1,8 +1,18 @@
 {
   "name": "webassembly",
-  "version": "0.10.1",
+  "description": "A minimal toolkit and runtime to produce and run WebAssembly modules.",
+  "version": "0.10.2",
   "author": "Daniel Wirtz <dcode+webassembly@dcode.io>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dcodeIO/webassembly.git"
+  },
+  "bugs": "https://github.com/dcodeIO/webassembly/issues",
+  "keywords": [
+    "webassembly",
+    "wasm"
+  ],
   "dependencies": {
     "@protobufjs/inquire": "^1.1.0",
     "chalk": "^1.1.3",

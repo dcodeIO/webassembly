@@ -1,4 +1,7 @@
 .vscode/
+.gitignore
+.gitmodules
+webassembly-*.tgz
 node_modules/
 npm-debug.*
 sandbox/
