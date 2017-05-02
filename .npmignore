@@ -3,9 +3,10 @@ node_modules/
 npm-debug.*
 sandbox/
 tools/bin/*
+!tools/bin/placeholder
 
-tools/llvm
-tools/clang
-tools/compiler-rt
-tools/binaryen
-lib/musl
+tools/llvm/
+tools/clang/
+tools/compiler-rt/
+tools/binaryen/
+lib/musl/
