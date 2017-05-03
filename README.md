@@ -4,6 +4,8 @@ An **experimental**, minimal toolkit and runtime on top of node to produce and r
 
 To run compiled .wasm files, you'll either need a recent version of your browser [with WebAssembly enabled](https://developer.mozilla.org/en-US/docs/WebAssembly#Browser_compatibility) or [node.js 8 nightly](https://nodejs.org/download/nightly/) - but you probably already know that.
 
+![build status](https://travis-ci.org/dcodeIO/webassembly.svg?branch=master)
+
 Motivation
 ----------
 
