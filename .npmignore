@@ -11,5 +11,8 @@ tools/bin/*
 tools/llvm/
 tools/clang/
 tools/compiler-rt/
+tools/libcxxabi/
+tools/libcxx/
+tools/libunwind/
 tools/binaryen/
 lib/musl/

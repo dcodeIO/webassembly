@@ -13,3 +13,12 @@
 [submodule "lib/musl"]
 	path = lib/musl
 	url = git://git.musl-libc.org/musl
+[submodule "tools/libcxx"]
+	path = tools/libcxx
+	url = https://github.com/llvm-mirror/libcxx
+[submodule "tools/libcxxabi"]
+	path = tools/libcxxabi
+	url = https://github.com/llvm-mirror/libcxxabi
+[submodule "tools/libunwind"]
+	path = tools/libunwind
+	url = https://github.com/llvm-mirror/libunwind
