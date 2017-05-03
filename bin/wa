@@ -39,8 +39,9 @@ switch (cmd) {
             ""
         ].join("\n"));
         process.exit(1);
-        break;
+        return 1;
     default:
         process.stderr.write(chalk.red.bold("FAILED") + " No such command: " + cmd + "\n");
-        break;
+        process.exit(1);
+        return 2;
 }

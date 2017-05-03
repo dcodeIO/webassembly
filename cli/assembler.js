@@ -5,7 +5,10 @@ var minimist = require("minimist"),
     util     = require("../cli/util"),
     pkg      = require("../package.json");
 
-exports.main = function(argv) {
+exports.main = (argv, callback) => {
+
+    if (!callback)
+        callback = () => {};
 
     // Define arguments
 
@@ -33,12 +36,21 @@ exports.main = function(argv) {
             "usage: " + chalk.bold.cyan("wa-assemble") + " [options] program.wast",
             ""
         ].join("\n"));
+        process.nextTick(() => {
+            callback(Error("usage"));
+        });
         return 1;
     }
 
     // Check platform
 
     var platform = util.platform();
+    if (!platform) {
+        var err = Error("platform binaries not found for " + util.platform.target);
+        callback(err);
+        return 3;
+    }
+
     var bindir = path.join("tools", "bin", platform);
 
     process.stderr.write(chalk.bold.white("Assembling on " + platform + " ...\n\n"));
@@ -65,7 +77,8 @@ exports.main = function(argv) {
     ]).then(() => {
 
     process.stderr.write(chalk.green.bold("SUCCESS") + "\n");
+    callback(null, out);
 
-    });
+    }, callback);
 
 };

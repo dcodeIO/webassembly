@@ -8,7 +8,6 @@
             "args": [
                 "${workspaceRoot}/bin/wa-compile",
                 "--main", "main",
-                "--wast",
                 "tests/test.c"
             ],
             "isShellCommand": true,

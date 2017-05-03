@@ -1,21 +1,7 @@
 var child_process = require("child_process"),
     chalk = require("chalk"),
     path  = require("path"),
-    tmp   = require("tmp"),
     fs    = require("fs");
-
-// Set up environment
-
-process.on("uncaughtException", err => {
-    process.stderr.write("\n" + chalk.red.bold("FAILED") + " " + err.stack + "\n");
-    process.exit(1);
-});
-
-process.on("unhandledRejection", (err, p) => {
-    throw err;
-});
-
-tmp.setGracefulCleanup();
 
 // Expose utility
 
@@ -51,9 +37,10 @@ function run(cmd, args) {
 
 exports.run = run;
 
-exports.platform = function() {
-    var platform = process.platform + "-" + process.arch;
-    if (fs.existsSync(path.join(__dirname, "..", "tools", "bin", platform)))
-        return platform;
-    throw Error("cannot find binaries for " + platform);
+exports.platform = function platform() {
+    var target = process.platform + "-" + process.arch;
+    if (fs.existsSync(path.join(__dirname, "..", "tools", "bin", target)))
+        return target;
+    platform.target = target;
+    return null;
 }

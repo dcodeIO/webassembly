@@ -26,6 +26,7 @@
     "browserify": "^14.3.0",
     "bundle-collapser": "^1.2.1",
     "exorcist": "^0.4.0",
+    "tap": "^10.3.2",
     "uglifyjs": "^2.4.10"
   },
   "main": "src/index",
@@ -40,6 +41,7 @@
     "build": "browserify src --no-builtins --plugin bundle-collapser/plugin --debug | exorcist dist/webassembly.js.map > dist/webassembly.js",
     "minify": "uglifyjs dist/webassembly.js -c -m --top-level ---in-source-map dist/webassembly.js.map --source-map dist/webassembly.min.js.map > dist/webassembly.min.js",
     "make": "npm run build && npm run minify",
-    "postinstall": "node scripts/postinstall"
+    "postinstall": "node scripts/postinstall",
+    "test": "node tests"
   }
 }
