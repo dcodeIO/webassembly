@@ -1,3 +1,4 @@
+dist: trusty
 language: node_js
 node_js:
   - 6
@@ -6,9 +7,4 @@ branches:
   only: master
 git:
   submodules: false
-addons:
-  apt:
-    packages:
-    - libstdc++6
-    - libgcc1
 script: npm test

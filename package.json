@@ -3,7 +3,7 @@
   "description": "A minimal toolkit and runtime to produce and run WebAssembly modules.",
   "version": "0.10.2",
   "author": "Daniel Wirtz <dcode+webassembly@dcode.io>",
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSE",
   "repository": {
     "type": "git",
     "url": "https://github.com/dcodeIO/webassembly.git"
