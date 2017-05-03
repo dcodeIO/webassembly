@@ -122,6 +122,21 @@ The `wa-assemble` utility assembles WebAssembly text format to a module.
 usage: wa-assemble [options] program.wast
 ```
 
+Command line utilites can also be used programmatically by providing command line arguments and a callback to their respective `main` functions:
+
+```js
+var compiler = require("webassembly/cli/compiler"); // or assembler, disassembler
+
+compiler.main([
+  "-o", "program.wasm",
+  "program.c"
+], function(err, filename) {
+  if (err)
+    throw err;
+  console.log("saved to: " + filename);
+});
+```
+
 IDE suggestions
 ---------------
 
