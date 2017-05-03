@@ -5,7 +5,6 @@ var http  = require('follow-redirects').https,
     tmp   = require("tmp"),
     targz = require("tar.gz"),
     unzip = require("extract-zip"),
-    util  = require("../cli/util"),
     pkg   = require("../package.json");
 
 var platform = process.platform + "-" + process.arch,
@@ -33,7 +32,7 @@ function download(callback) {
 
 function install(file, callback) {
     var bindir = path.join(__dirname, "..", "tools", "bin", platform);
-    fs.mkdir(bindir, function(err) {
+    fs.mkdir(bindir, function() {
         if (/\.zip$/.test(archive))
             unzip(file, { dir: bindir }, callback);
         else

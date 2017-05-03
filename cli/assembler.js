@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 var minimist = require("minimist"),
     chalk    = require("chalk"),
     path     = require("path"),

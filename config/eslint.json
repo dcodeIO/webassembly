@@ -1,0 +1,20 @@
+{
+    "env": {
+        "node": true,
+        "browser": true
+    },
+    "globals": {
+        "ArrayBuffer": true,
+        "Uint8Array": true,
+        "Uint32Array": true,
+        "Int32Array": true,
+        "Float32Array": true,
+        "Float64Array": true,
+        "WebAssembly": true,
+        "Promise": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 6
+    },
+    "extends": "eslint:recommended"
+}

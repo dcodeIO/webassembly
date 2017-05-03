@@ -1,0 +1,14 @@
+---
+engines:
+  eslint:
+    enabled: true
+    config:
+      config: config/eslint.json
+ratings:
+  paths:
+  - "src/**.js"
+  - "cli/**.js"
+  - "scripts/**.js"
+exclude_paths:
+  - "dist/**"
+  - "**/tests/**"

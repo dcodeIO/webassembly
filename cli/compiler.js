@@ -1,9 +1,7 @@
-#!/usr/bin/env node
 var minimist = require("minimist"),
     chalk    = require("chalk"),
     path     = require("path"),
     tmp      = require("tmp"),
-    fs       = require("fs"),
     util     = require("../cli/util"),
     pkg      = require("../package.json");
 
