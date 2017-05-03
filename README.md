@@ -75,9 +75,17 @@ For now, math is (mostly) performed on 64 bit IEEE754 floating point operands as
 
 C features available out of the box:
 
-* Various standard types (int, bool, float) and corresponding constants
+* Various standard types (integers, booleans, floats) and corresponding constants
 * `malloc`, `free`, `realloc` and `calloc` (dlmalloc) on top of a custom `sbrk`
 * `memcpy`, `memmove`, `memalign` and `memset` (musl)
+
+On the JS side of things, the [memory instance](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Memory) (`module.env.memory`) has additional mixed in utility methods for convenient memory access:
+
+* **getInt(ptr: `number`): `number`** gets the signed 32 bit integer at the specified address (aligned to 4 bytes)
+* **getUint(ptr: `number`): `number`** gets the unsigned 32 bit integer at the specified address (aligned to 4 bytes)
+* **getFloat(ptr: `number`): `number`** gets the 32 bit float at the specified address (aligned to 4 bytes)
+* **getDouble(ptr: `number`): `number`** gets the 64 bit double at the specified address (aligned to 8 bytes)
+* **getString(ptr: `number`): `string`** gets the zero terminated string literal at the specified address
 
 Command line
 ------------
