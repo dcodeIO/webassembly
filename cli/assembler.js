@@ -5,6 +5,8 @@ var minimist = require("minimist"),
     util     = require("../cli/util"),
     pkg      = require("../package.json");
 
+var defaults = require("./assembler.json");
+
 exports.main = (argv, callback) => {
 
     if (!callback)
@@ -64,16 +66,7 @@ exports.main = (argv, callback) => {
         out = argv.out && path.normalize(argv.out) || path.join(path.dirname(file), path.basename(file, ".wast") + ".wasm");
 
     run(path.join(basedir, bindir, "wasm-opt"), [
-        "-O3",
-        "--coalesce-locals-learning",
-        "--dce",
-        "--duplicate-function-elimination",
-        "--inlining",
-        "--local-cse",
-        "--optimize-instructions",
-        "--reorder-functions",
-        "--reorder-locals",
-        "--vacuum"
+        defaults,
         [ argv.debug && "-d" || undefined ],
         "-o", out,
         file

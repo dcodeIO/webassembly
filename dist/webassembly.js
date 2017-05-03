@@ -110,7 +110,6 @@ function load(file, options) {
 
     function grow() {
         var buf = memory.buffer;
-        memory.S8  = new Int8Array   (buf);
         memory.U8  = new Uint8Array  (buf);
         memory.S32 = new Int32Array  (buf);
         memory.U32 = new Uint32Array (buf);

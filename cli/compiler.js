@@ -7,6 +7,8 @@ var minimist = require("minimist"),
     util     = require("../cli/util"),
     pkg      = require("../package.json");
 
+var assemblerDefaults = require("./assembler.json");
+
 exports.main = (argv, callback) => {
 
     if (!callback)
@@ -19,10 +21,12 @@ exports.main = (argv, callback) => {
             out: "o",
             debug: "d",
             quiet: "q",
+            headers: "h",
+            include: "i",
             stack: "s",
             main: "m"
         },
-        string: [ "out", "main", "stack" ],
+        string: [ "out", "main", "stack", "headers", "include" ],
         boolean: [ "debug", "quiet" ]
     });
 
@@ -38,6 +42,8 @@ exports.main = (argv, callback) => {
             "  -o, --out      Specifies the .wasm output file. Defaults to input file with .wasm extension.",
             "  -d, --debug    Prints debug information to stderr.",
             "  -q, --quiet    Suppresses informatory output.",
+            "  -h, --headers  Includes the specified headers directory. Multiple are possible.",
+            "  -i, --include  Includes the specified file. Multiple are possible.",
             "",
             chalk.gray.bold("  Module configuration:"),
             "",
@@ -75,6 +81,13 @@ exports.main = (argv, callback) => {
         temp = tmp.fileSync({ prefix: "wa-compile-" }),
         out = argv.out && path.normalize(argv.out) || path.join(path.dirname(file), path.basename(file, ".c") + ".wasm");
 
+    var headers = argv.headers && typeof argv.headers === "string" && [ argv.headers ] || argv.headers || [],
+        include = argv.include && typeof argv.include === "string" && [ argv.include ] || argv.include || [];
+
+    var incl = [];
+    headers.forEach(file => { incl.push("-I", file); });
+    include.forEach(file => { incl.push("-include", file); });
+
     run(path.join(basedir, bindir, "clang"), [
         "-O",
         "-S",
@@ -83,7 +96,9 @@ exports.main = (argv, callback) => {
         "-nobuiltininc",
         "-no-integrated-as",
         "-Wno-builtin-requires-header",
+        "-DWEBASSEMBLY",
         "-I", path.join(basedir, "include"),
+        incl,
         [ argv.debug && "-v" || undefined ],
         "-o", temp.name,
         file
@@ -100,17 +115,7 @@ exports.main = (argv, callback) => {
     ], argv)).then(() =>
 
     run(path.join(basedir, bindir, "wasm-opt"), [
-        "-O3",
-        "--coalesce-locals-learning",
-        "--dce",
-        "--duplicate-function-elimination",
-        "--inlining",
-        "--local-cse",
-        "--optimize-instructions",
-        "--reorder-functions",
-        "--reorder-locals",
-        "--vacuum"
-        [ argv.debug && "-d" || undefined ],
+        assemblerDefaults,
         "-o", out,
         temp.name
     ], argv)).then(() => {

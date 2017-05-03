@@ -1,0 +1,13 @@
+[
+    "-O3",
+    "--coalesce-locals-learning",
+    "--dce",
+    "--duplicate-function-elimination",
+    "--inlining",
+    "--local-cse",
+    "--merge-blocks",
+    "--optimize-instructions",
+    "--reorder-functions",
+    "--reorder-locals",
+    "--vacuum"
+]
