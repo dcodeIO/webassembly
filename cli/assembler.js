@@ -15,10 +15,11 @@ exports.main = (argv, callback) => {
      argv = minimist(argv, {
         alias: {
             out: "o",
-            debug: "d"
+            debug: "d",
+            quiet: "q"
         },
         string: [ "out" ],
-        boolean: [ "debug" ]
+        boolean: [ "debug", "quiet" ]
     });
 
     // Validate arguments
@@ -32,6 +33,7 @@ exports.main = (argv, callback) => {
             "",
             "  -o, --out      Specifies the .wasm output file. Defaults to input file with .wasm extension.",
             "  -d, --debug    Prints debug information to stderr.",
+            "  -q, --quiet    Suppresses informatory output.",
             "",
             "usage: " + chalk.bold.cyan("wa-assemble") + " [options] program.wast",
             ""
@@ -53,7 +55,8 @@ exports.main = (argv, callback) => {
 
     var bindir = path.join("tools", "bin", platform);
 
-    process.stderr.write(chalk.bold.white("Assembling on " + platform + " ...\n\n"));
+    if (!argv.quiet)
+        process.stderr.write(chalk.bold.white("Assembling on " + platform + " ...\n\n"));
 
     var run = util.run,
         basedir = path.join(__dirname, ".."),
@@ -74,9 +77,11 @@ exports.main = (argv, callback) => {
         [ argv.debug && "-d" || undefined ],
         "-o", out,
         file
-    ]).then(() => {
+    ], argv).then(() => {
 
-    process.stderr.write(chalk.green.bold("SUCCESS") + "\n");
+    if (!argv.quiet)
+        process.stderr.write(chalk.green.bold("SUCCESS") + "\n");
+
     callback(null, out);
 
     }, callback);

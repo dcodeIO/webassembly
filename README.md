@@ -95,6 +95,7 @@ The `wa-compile` utility compiles C code to a WebAssembly module.
 ```
   -o, --out      Specifies the .wasm output file. Defaults to input file with .wasm extension.
   -d, --debug    Prints debug information to stderr.
+  -q, --quiet    Suppresses informatory output.
 
   Module configuration:
 
@@ -109,6 +110,7 @@ The `wa-disassemble` utility decompiles a WebAssembly module to text format.
 ```
   -o, --out      Specifies the .wast output file. Defaults to input file with .wast extension.
   -d, --debug    Prints debug information to stderr.
+  -q, --quiet    Suppresses informatory output.
 
 usage: wa-disassemble [options] program.wasm
 ```
@@ -118,6 +120,7 @@ The `wa-assemble` utility assembles WebAssembly text format to a module.
 ```
   -o, --out      Specifies the .wasm output file. Defaults to input file with .wasm extension.
   -d, --debug    Prints debug information to stderr.
+  -q, --quiet    Suppresses informatory output.
 
 usage: wa-assemble [options] program.wast
 ```
@@ -145,6 +148,6 @@ I am using:
 * [Visual Studio Code](https://code.visualstudio.com/) (example [Ctrl+Shift+B task](https://github.com/dcodeIO/webassembly/blob/master/.vscode/tasks.json))
 * with [C/C++ for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools) (example [config](https://github.com/dcodeIO/webassembly/blob/master/.vscode/c_cpp_properties.json))
 
-But anything should work as long as you are able to configure it.
+But anything should work as long as you are able to configure it, even notepad.
 
 License: [BSD 3-Clause License](https://opensource.org/licenses/BSD-3-Clause). Includes parts of [musl](http://www.musl-libc.org/) ([MIT License](https://opensource.org/licenses/MIT)) and [binaryen](https://github.com/WebAssembly/binaryen) ([Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0)). WebAssembly logo by Carlos Baraza ([CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)).

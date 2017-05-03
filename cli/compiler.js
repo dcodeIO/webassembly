@@ -18,11 +18,12 @@ exports.main = (argv, callback) => {
         alias: {
             out: "o",
             debug: "d",
+            quiet: "q",
             stack: "s",
             main: "m"
         },
         string: [ "out", "main", "stack" ],
-        boolean: [ "debug", "wast" ]
+        boolean: [ "debug", "quiet" ]
     });
 
     // Validate arguments
@@ -36,6 +37,7 @@ exports.main = (argv, callback) => {
             "",
             "  -o, --out      Specifies the .wasm output file. Defaults to input file with .wasm extension.",
             "  -d, --debug    Prints debug information to stderr.",
+            "  -q, --quiet    Suppresses informatory output.",
             "",
             chalk.gray.bold("  Module configuration:"),
             "",
@@ -62,7 +64,8 @@ exports.main = (argv, callback) => {
 
     var bindir = path.join("tools", "bin", platform);
 
-    process.stderr.write(chalk.bold.white("Compiling on " + platform + " ...\n\n"));
+    if (!argv.quiet)
+        process.stderr.write(chalk.bold.white("Compiling on " + platform + " ...\n\n"));
 
     tmp.setGracefulCleanup();
 
@@ -84,7 +87,7 @@ exports.main = (argv, callback) => {
         [ argv.debug && "-v" || undefined ],
         "-o", temp.name,
         file
-    ]).then(() =>
+    ], argv).then(() =>
 
     run(path.join(basedir, bindir, "s2wasm"), [
         "--import-memory",
@@ -94,7 +97,7 @@ exports.main = (argv, callback) => {
         "-o", temp.name,
         temp.name
 
-    ])).then(() =>
+    ], argv)).then(() =>
 
     run(path.join(basedir, bindir, "wasm-opt"), [
         "-O3",
@@ -110,9 +113,11 @@ exports.main = (argv, callback) => {
         [ argv.debug && "-d" || undefined ],
         "-o", out,
         temp.name
-    ])).then(() => {
+    ], argv)).then(() => {
 
-    process.stderr.write(chalk.green.bold("SUCCESS") + "\n");
+    if (!argv.quiet)
+        process.stderr.write(chalk.green.bold("SUCCESS") + "\n");
+
     callback(null, out);
 
     }, callback);

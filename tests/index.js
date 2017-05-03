@@ -8,6 +8,7 @@ var compiler     = require("../cli/compiler"),
 tap.test("compiler", function(test) {
     compiler.main([
         "--main", "main",
+        "-q",
         "-o", "tests/test.wasm",
         "tests/test.c"
     ], function(err) {
@@ -19,6 +20,7 @@ tap.test("compiler", function(test) {
 tap.test("disassembler", function(test) {
     disassembler.main([
         "-o", "tests/test.wast",
+        "-q",
         "tests/test.wasm"
     ], function(err) {
         test.notOk(err, "should not raise an error");
@@ -29,6 +31,7 @@ tap.test("disassembler", function(test) {
 tap.test("assembler", function(test) {
     assembler.main([
         "-o", "tests/test-as.wasm",
+        "-q",
         "tests/test.wast"
     ], function(err) {
         test.notOk(err, "should not raise an error");
