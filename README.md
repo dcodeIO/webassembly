@@ -4,7 +4,7 @@ An **experimental**, minimal toolkit and runtime on top of node to produce and r
 
 To run compiled .wasm files, you'll either need a recent version of your browser [with WebAssembly enabled](https://developer.mozilla.org/en-US/docs/WebAssembly#Browser_compatibility) or [node.js 8 nightly](https://nodejs.org/download/nightly/) - but you probably already know that.
 
-[![npm](https://img.shields.io/npm/v/webassembly.svg)](https://www.npmjs.com/package/webassembly) [![build status](https://travis-ci.org/dcodeIO/webassembly.svg?branch=master)](https://travis-ci.org/dcodeIO/webassembly)
+[![npm](https://img.shields.io/npm/v/webassembly.svg)](https://www.npmjs.com/package/webassembly) [![build status](https://travis-ci.org/dcodeIO/webassembly.svg?branch=master)](https://travis-ci.org/dcodeIO/webassembly) [![Code Climate](https://codeclimate.com/github/dcodeIO/webassembly/badges/gpa.svg)](https://codeclimate.com/github/dcodeIO/webassembly)
 
 Motivation
 ----------
@@ -51,7 +51,7 @@ Installation
 $> npm install webassembly
 ```
 
-Installing the package automatically downloads prebuilt binaries for either Windows (`win32-x64`) or Linux (`linux-x64`, you might need `libstdc++6`).
+Installing the package automatically downloads prebuilt binaries for either Windows (`win32-x64`) or Linux (`linux-x64`).
 
 Toolkit
 -------
