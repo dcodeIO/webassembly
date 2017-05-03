@@ -2,6 +2,16 @@ language: node_js
 node_js:
   - 6
   - 7
+env:
+  - CXX=g++-4.9
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.9
 branches:
   only: master
+git:
+  submodules: false
 script: npm test
