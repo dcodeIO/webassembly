@@ -1,6 +1,6 @@
 <h1><p align="center"><img src="https://github.com/WebAssembly/web-assembly-logo/raw/master/dist/logo/web-assembly-logo-256px.png" alt="webassembly" /><br />for node.js</p></h1>
 
-An **experimental**, minimal toolkit and runtime on top of node to produce and run WebAssembly modules.
+An **experimental**, minimal toolkit and runtime on top of node to produce and run [WebAssembly](http://webassembly.org) modules.
 
 To run compiled .wasm files, you'll either need a recent version of your browser [with WebAssembly enabled](https://developer.mozilla.org/en-US/docs/WebAssembly#Browser_compatibility) or [node.js 8 nightly](https://nodejs.org/download/nightly/) - but you probably already know that.
 
@@ -9,7 +9,7 @@ To run compiled .wasm files, you'll either need a recent version of your browser
 Motivation
 ----------
 
-Prevalent WebAssembly tooling provides compilation to WebAssembly from a C/C++ perspective with a focus on porting existing code. Because of that, it usually produces a lot of extra code that isn't needed alongside a module that is solely trying to complement JavaScript. This package, on the other hand, tries to keep the support library and the generated modules as small as possible by specifically targeting WebAssembly only.
+Prevalent WebAssembly tooling provides compilation to WebAssembly from a C/C++ perspective with a focus on porting existing code. Because of that, it usually produces a lot of extra code that isn't needed alongside a module that is solely trying to complement JavaScript. This package, on the other hand, tries to keep the support library and the generated modules as small as possible by specifically targeting WebAssembly (in the browser) only.
 
 PRs welcome!
 
@@ -51,12 +51,12 @@ Installation
 $> npm install webassembly
 ```
 
-Currently, the package ships with prebuilt [clang](https://github.com/llvm-mirror/clang) and slightly modified [binaryen](https://github.com/dcodeIO/binaryen) binaries for Windows (`win32-x64`) and Linux (`linux-x64`).
+Installing the package automatically downloads prebuilt binaries for either Windows (`win32-x64`) or Linux (`linux-x64`, you might have to install `libstdc++-4.9-dev`).
 
 Toolkit
 -------
 
-WebAssembly functionality is provided by a [C header](https://github.com/dcodeIO/webassembly/blob/master/include/webassembly.h). A small [JavaScript support library](https://github.com/dcodeIO/webassembly/tree/master/src) provides the browser runtime.
+WebAssembly functionality is provided by a [C header](https://github.com/dcodeIO/webassembly/blob/master/include/webassembly.h). A small [JavaScript support library](https://github.com/dcodeIO/webassembly/tree/master/src) ([distributions](https://github.com/dcodeIO/webassembly/tree/master/dist)) provides the browser runtime.
 
 * Use the `import` and `export` defines to mark your imports and exports.
 * console methods become `console_log` etc. and Math becomes `Math_abs` etc.

@@ -5,6 +5,9 @@
 #define bool    _Bool
 #define true    1
 #define false   0
+
+// stddef
+
 #define NULL    ((void*)0)
 
 // stdint

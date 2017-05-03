@@ -1,2 +1,4 @@
 #!/usr/bin/env node
-require("../cli/disassembler").main(process.argv.slice(2));
+var ret = require("../cli/disassembler").main(process.argv.slice(2));
+if (typeof ret === "number")
+    process.exit(ret);
