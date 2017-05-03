@@ -1,12 +1,14 @@
 .vscode/
 .gitignore
 .gitmodules
+.codeclimate.yml
+.travis.yml
 webassembly-*.tgz
 node_modules/
 npm-debug.*
 sandbox/
 tools/bin/*
-!tools/bin/placeholder
+!tools/bin/LICENSE*
 
 tools/llvm/
 tools/clang/
