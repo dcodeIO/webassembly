@@ -2,9 +2,9 @@
 
 An **experimental**, minimal toolkit and runtime on top of node to produce and run [WebAssembly](http://webassembly.org) modules.
 
-To run compiled .wasm files, you'll either need a recent version of your browser [with WebAssembly enabled](https://developer.mozilla.org/en-US/docs/WebAssembly#Browser_compatibility) or [node.js 8 nightly](https://nodejs.org/download/nightly/) - but you probably already know that.
+To run compiled .wasm files, you'll either need a recent version of your browser [with WebAssembly enabled](http://caniuse.com/#feat=wasm) or [node.js 8 nightly](https://nodejs.org/download/nightly/) - but you probably already know that.
 
-[![npm](https://img.shields.io/npm/v/webassembly.svg)](https://www.npmjs.com/package/webassembly) [![build status](https://travis-ci.org/dcodeIO/webassembly.svg?branch=master)](https://travis-ci.org/dcodeIO/webassembly) [![Code Climate](https://codeclimate.com/github/dcodeIO/webassembly/badges/gpa.svg)](https://codeclimate.com/github/dcodeIO/webassembly)
+[![npm](https://img.shields.io/npm/v/webassembly.svg)](https://www.npmjs.com/package/webassembly) [![build status](https://travis-ci.org/dcodeIO/webassembly.svg?branch=master)](https://travis-ci.org/dcodeIO/webassembly) [![Code Climate](https://codeclimate.com/github/dcodeIO/webassembly/badges/gpa.svg)](https://codeclimate.com/github/dcodeIO/webassembly) [![npm downloads](https://img.shields.io/npm/dm/webassembly.svg)](https://www.npmjs.com/package/webassembly)
 
 Motivation
 ----------
@@ -77,7 +77,7 @@ C features available out of the box:
 
 * Various standard types (integers, booleans, floats) and corresponding constants
 * `malloc`, `free`, `realloc` and `calloc` (dlmalloc)
-* `memcpy`, `memmove`, `memalign` and `memset` (musl)
+* `memcpy`, `memmove`, `memalign`, `memset` and `strlen` (musl)
 
 Each of these can be explicitly exported to JS by defining `EXPORT_<FUNCNAME>`, i.e. `#define EXPORT_MALLOC`.
 
@@ -106,7 +106,7 @@ To add imports or to specify the initial and maximum memory, **webassembly.load(
 Command line
 ------------
 
-The `wa-compile` utility compiles C code to a WebAssembly module.
+The `wa-compile` utility (also callable as `wa compile`, `wa comp`, `wa c`) compiles C code to a WebAssembly module.
 
 ```
   -o, --out      Specifies the .wasm output file. Defaults to input file with .wasm extension.
@@ -123,7 +123,7 @@ The `wa-compile` utility compiles C code to a WebAssembly module.
 usage: wa-compile [options] program.c
 ```
 
-The `wa-disassemble` utility decompiles a WebAssembly module to text format.
+The `wa-disassemble` utility (also callable as `wa disassemble`, `wa dis`, `wa d`) decompiles a WebAssembly module to text format.
 
 ```
   -o, --out      Specifies the .wast output file. Defaults to input file with .wast extension.
@@ -133,7 +133,7 @@ The `wa-disassemble` utility decompiles a WebAssembly module to text format.
 usage: wa-disassemble [options] program.wasm
 ```
 
-The `wa-assemble` utility assembles WebAssembly text format to a module.
+The `wa-assemble` utility (also callable as `wa assemble`, `wa as`, `wa a`) assembles WebAssembly text format to a module.
 
 ```
   -o, --out      Specifies the .wasm output file. Defaults to input file with .wasm extension.

@@ -7,8 +7,7 @@
             "command": "node",
             "args": [
                 "${workspaceRoot}/bin/wa-compile",
-                "--main", "main",
-                "tests/test.c"
+                "tests/bcrypt/bcrypt.c"
             ],
             "isShellCommand": true,
             "isBuildCommand": true,

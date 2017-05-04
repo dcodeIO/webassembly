@@ -30,7 +30,7 @@
     "tap": "^10.3.2",
     "uglifyjs": "^2.4.10"
   },
-  "main": "src/index",
+  "main": "index",
   "bin": {
     "wa": "bin/wa",
     "wa-compile": "bin/wa-compile",
@@ -43,7 +43,7 @@
     "minify": "uglifyjs dist/webassembly.js -c -m --top-level ---in-source-map dist/webassembly.js.map --source-map dist/webassembly.min.js.map > dist/webassembly.min.js",
     "lint": "eslint src/**.js cli/**.js scripts/**.js -c config/eslint.json",
     "make": "npm run build && npm run minify",
-    "postinstall": "node scripts/postinstall",
+    "postinstall": "node scripts/setup",
     "test": "node tests"
   }
 }

@@ -27,9 +27,8 @@ exports.main = (argv, callback) => {
 
     var files = argv._;
     if (files.length !== 1) {
+        util.logo("v" + pkg.version + " Assembler");
         process.stderr.write([
-            "webassembly v" + pkg.version + " Assembler",
-            "",
             chalk.bold.white("Assembles WebAssembly text format to a module."),
             "",
             "  -o, --out      Specifies the .wasm output file. Defaults to input file with .wasm extension.",

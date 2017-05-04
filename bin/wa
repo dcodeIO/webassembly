@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 var chalk = require("chalk"),
-    pkg = require("../package.json");
+    util  = require("../cli/util"),
+    pkg   = require("../package.json");
 
 var cmd = process.argv[2];
 process.argv.splice(2, 1);
@@ -24,9 +25,8 @@ switch (cmd) {
         require("./wa-disassemble");
         break;
     case undefined:
+        util.logo("v" + pkg.version + " Command line utilities");
         process.stderr.write([
-            "webassembly v" + pkg.version + " Command line utilities",
-            "",
             chalk.bold.white("Compiles, assembles and disassembles WebAssembly modules."),
             "",
             "For command specific usage instructions, type:",

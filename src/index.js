@@ -162,8 +162,10 @@ function load(file, options) {
                 exports = {};
             for (var i = 0, ks = getOwnPropertyNames(cexports); i < ks.length; )
                 exports[ks[i]] = cexports[ks[i++]];
+            env.stackmax = memory.U32[1] + 4;
             return {
                 env: env,
+                memory: memory,
                 exports: exports
             };
         });

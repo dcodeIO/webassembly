@@ -122,7 +122,7 @@ function load(file, options) {
     // Add console to environment
 
     getOwnPropertyNames(console).forEach(function(key) {
-        if (typeof console[key] === "function")
+        if (typeof console[key] === "function") // eslint-disable-line no-console
             env["console_" + key] = function(ptr, base) {
                 var s = getString(ptr);
                 if (base)
@@ -149,7 +149,7 @@ function load(file, options) {
                         base += 4;
                         return value;
                     });
-                return console[key](s);
+                return console[key](s); // eslint-disable-line no-console
             };
     });
 
@@ -182,8 +182,10 @@ function load(file, options) {
                 exports = {};
             for (var i = 0, ks = getOwnPropertyNames(cexports); i < ks.length; )
                 exports[ks[i]] = cexports[ks[i++]];
+            env.stackmax = memory.U32[1] + 4;
             return {
                 env: env,
+                memory: memory,
                 exports: exports
             };
         });

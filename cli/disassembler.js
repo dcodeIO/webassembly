@@ -25,9 +25,8 @@ exports.main = (argv, callback) => {
 
     var files = argv._;
     if (files.length !== 1) {
+        util.logo("v" + pkg.version + " Disassembler");
         process.stderr.write([
-            "webassembly v" + pkg.version + " Disassembler",
-            "",
             chalk.bold.white("Disassembles a WebAssembly module to text format."),
             "",
             "  -o, --out      Specifies the .wast output file. Defaults to input file with .wast extension.",

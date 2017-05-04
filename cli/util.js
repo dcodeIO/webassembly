@@ -45,3 +45,13 @@ exports.platform = function platform() {
     platform.target = target;
     return null;
 }
+
+exports.logo = function logo(text) {
+    process.stderr.write(([
+        "",
+        chalk.gray.bold("┌────┐"),
+        chalk.gray.bold("│    │"),
+        chalk.gray.bold("│  ") + chalk.white.bold("WebAssembly") + " " + text,
+        chalk.gray.bold("└────┘")
+    ].join("\n") + "\n\n"));
+}
