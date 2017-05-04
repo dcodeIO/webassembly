@@ -73,7 +73,7 @@ Available `LoadOptions`:
 C features available out of the box:
 
 * Various standard types (integers, booleans, floats) and corresponding constants
-* Use the `import` and `export` defines in C to mark your imports and exports.
+* `import` and `export` defines to mark your imports and exports
 * console methods become `console_log` etc. and Math becomes `Math_abs` etc.
 * `malloc`, `free`, `realloc` and `calloc` (dlmalloc)
 * `memcpy`, `memmove`, `memalign`, `memset` and `strlen` (musl)
@@ -163,14 +163,14 @@ compiler.main([
 });
 ```
 
-IDE suggestions
+IDE integration
 ---------------
+
+Anything should work as long as you are able to configure it, even notepad.
 
 I am using:
 
 * [Visual Studio Code](https://code.visualstudio.com/) (example [Ctrl+Shift+B task](https://github.com/dcodeIO/webassembly/blob/master/.vscode/tasks.json))
 * with [C/C++ for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools) (example [config](https://github.com/dcodeIO/webassembly/blob/master/.vscode/c_cpp_properties.json))
-
-But anything should work as long as you are able to configure it, even notepad.
 
 License: [BSD 3-Clause License](https://opensource.org/licenses/BSD-3-Clause). Includes parts of [musl](http://www.musl-libc.org/) ([MIT License](https://opensource.org/licenses/MIT)) and [binaryen](https://github.com/WebAssembly/binaryen) ([Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0)). WebAssembly logo by Carlos Baraza ([CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)).

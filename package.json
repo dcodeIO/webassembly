@@ -1,7 +1,7 @@
 {
   "name": "webassembly",
   "description": "A minimal toolkit and runtime to produce and run WebAssembly modules.",
-  "version": "0.10.3",
+  "version": "0.10.4",
   "author": "Daniel Wirtz <dcode+webassembly@dcode.io>",
   "license": "SEE LICENSE IN LICENSE",
   "repository": {
