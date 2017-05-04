@@ -51,15 +51,9 @@ export
 #endif
 void* calloc(size_t n_elements, size_t element_size);
 
-#ifdef EXPORT_STRLEN
-export
-#endif
-size_t strlen(const char *s);
-
 #include "../../lib/sbrk.c"
 #include "../../lib/memset.c"
 #include "../../lib/memcpy.c"
 #include "../../lib/malloc.c"
 #include "../../lib/memmove.c"
 #include "../../lib/memalign.c"
-#include "../../lib/strlen.c"

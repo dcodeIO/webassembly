@@ -58,8 +58,27 @@ Toolkit
 
 WebAssembly functionality is provided by a [C header](https://github.com/dcodeIO/webassembly/blob/master/include/webassembly.h). A small [JavaScript support library](https://github.com/dcodeIO/webassembly/tree/master/src) ([distributions](https://github.com/dcodeIO/webassembly/tree/master/dist)) provides the browser runtime.
 
+Calling **webassembly.load(file: `string`, [options: `LoadOptions`]): `Promise<IModule>`** returns a promise for a module instance:
+
+* `module.exports` contains exported functions
+* `module.memory` references the memory instance
+* `module.env` references the environment used
+
+Available `LoadOptions`:
+
+* **imports: `Object`** specifies imported functions
+* **initialMemory: `number`** specifies the initial amount of memory in 64k pages (defaults to `1`)
+* **maximumMemory: `number`** specifies the maximum amount of memory in 64k pages that the module is allowed to grow to (optional)
+
+C features available out of the box:
+
+* Various standard types (integers, booleans, floats) and corresponding constants
 * Use the `import` and `export` defines in C to mark your imports and exports.
 * console methods become `console_log` etc. and Math becomes `Math_abs` etc.
+* `malloc`, `free`, `realloc` and `calloc` (dlmalloc)
+* `memcpy`, `memmove`, `memalign`, `memset` and `strlen` (musl)
+
+Malloc and friends can be explicitly exported to JS by defining `EXPORT_<FUNCNAME>`, i.e. `#define EXPORT_MALLOC`.
 
 Console functions accept the following string substitutions with variable arguments:
 
@@ -73,15 +92,7 @@ Console functions accept the following string substitutions with variable argume
 
 For now, math is (mostly) performed on 64 bit IEEE754 floating point operands as provided by the browser.
 
-C features available out of the box:
-
-* Various standard types (integers, booleans, floats) and corresponding constants
-* `malloc`, `free`, `realloc` and `calloc` (dlmalloc)
-* `memcpy`, `memmove`, `memalign`, `memset` and `strlen` (musl)
-
-Each of these can be explicitly exported to JS by defining `EXPORT_<FUNCNAME>`, i.e. `#define EXPORT_MALLOC`.
-
-On the JS side of things, the [memory instance](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Memory) (`module.env.memory`) has additional mixed in utility methods for convenient memory access:
+On the JS side of things, the [memory instance](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Memory) (`module.memory`) has additional mixed in utility methods for convenient memory access:
 
 * **memory.getInt(ptr: `number`): `number`** gets the signed 32 bit integer at the specified address (aligned to 4 bytes)
 * **memory.getUint(ptr: `number`): `number`** gets the unsigned 32 bit integer at the specified address (aligned to 4 bytes)
@@ -96,12 +107,6 @@ The underlying typed array views are also available for direct use. Just make su
 * **memory.S32: `Int32Array`**
 * **memory.F32: `Float32Array`**
 * **memory.F64: `Float64Array`**
-
-To add imports or to specify the initial and maximum memory, **webassembly.load(file: `string`, [options: `LoadOptions`]): `Promise<IModule>`** takes the following options:
-
-* **imports: `Object.<string,function>`** specifies imported functions
-* **initialMemory: `number`** specifies the initial amount of memory in 64k pages
-* **maximumMemory: `number`** specifies the maximum amount of memory in 64k pages that the module is allowed to grow to (optional)
 
 Command line
 ------------
