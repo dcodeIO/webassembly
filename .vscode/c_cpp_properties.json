@@ -3,39 +3,45 @@
         {
             "name": "Mac",
             "includePath": [
-                "../include"
+                "${workspaceRoot}/include",
+                "${workspaceRoot}/include/stdlib"
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": "",
                 "path": [
-                    "../include"
+                    "${workspaceRoot}/include",
+                    "${workspaceRoot}/include/stdlib"
                 ]
             }
         },
         {
             "name": "Linux",
             "includePath": [
-                "../include"
+                "${workspaceRoot}/include",
+                "${workspaceRoot}/include/stdlib"
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": "",
                 "path": [
-                    "../include"
+                    "${workspaceRoot}/include",
+                    "${workspaceRoot}/include/stdlib"
                 ]
             }
         },
         {
             "name": "Win32",
             "includePath": [
-                "../include"
+                "${workspaceRoot}/include",
+                "${workspaceRoot}/include/stdlib"
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": "",
                 "path": [
-                    "../include"
+                    "${workspaceRoot}/include",
+                    "${workspaceRoot}/include/stdlib"
                 ]
             }
         }

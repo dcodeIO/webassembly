@@ -39,11 +39,12 @@
   },
   "tools": "0.10.0",
   "scripts": {
+    "test": "node tests",
+    "lint": "eslint src/**.js cli/**.js scripts/**.js -c config/eslint.json",
     "build": "browserify src --no-builtins --plugin bundle-collapser/plugin --debug | exorcist dist/webassembly.js.map > dist/webassembly.js",
     "minify": "uglifyjs dist/webassembly.js -c -m --top-level ---in-source-map dist/webassembly.js.map --source-map dist/webassembly.min.js.map > dist/webassembly.min.js",
-    "lint": "eslint src/**.js cli/**.js scripts/**.js -c config/eslint.json",
-    "make": "npm run build && npm run minify",
-    "postinstall": "node scripts/setup",
-    "test": "node tests"
+    "precompile": "node bin/wa-compile lib/webassembly.c -b -O -o lib/webassembly.wasm",
+    "make": "npm run build && npm run minify && npm run precompile",
+    "postinstall": "node scripts/setup"
   }
 }

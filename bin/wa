@@ -24,18 +24,25 @@ switch (cmd) {
     case "d":
         require("./wa-disassemble");
         break;
+    case "linker":
+    case "link":
+    case "ln":
+    case "l":
+        require("./wa-link");
+        break;
     case undefined:
-        util.logo("v" + pkg.version + " Command line utilities");
+        util.printLogo("CLI");
         process.stderr.write([
-            chalk.bold.white("Compiles, assembles and disassembles WebAssembly modules."),
+            chalk.bold.white("Compiles, links, assembles and disassembles WebAssembly modules."),
             "",
             "For command specific usage instructions, type:",
             "",
             "  wa compile       " + chalk.gray.bold("or") + "   wa-compile",
+            "  wa link          " + chalk.gray.bold("or") + "   wa-link",
             "  wa assemble      " + chalk.gray.bold("or") + "   wa-assemble",
             "  wa disassemble   " + chalk.gray.bold("or") + "   wa-disassemble",
             "",
-            "usage: " + chalk.bold.cyan("wa") + " <compile|assemble|disassemble> [options] file",
+            "usage: " + chalk.bold.cyan("wa") + " <compile|link|assemble|disassemble> [options] file",
             ""
         ].join("\n"));
         process.exit(1);

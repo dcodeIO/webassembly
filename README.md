@@ -2,7 +2,7 @@
 
 An **experimental**, minimal toolkit and runtime on top of node to produce and run [WebAssembly](http://webassembly.org) modules.
 
-To run compiled .wasm files, you'll either need a recent version of your browser [with WebAssembly enabled](http://caniuse.com/#feat=wasm) or [node.js 8 nightly](https://nodejs.org/download/nightly/) - but you probably already know that.
+To *run* compiled .wasm files, you'll either need a recent version of your browser [with WebAssembly enabled](http://caniuse.com/#feat=wasm) or [node.js 8 nightly](https://nodejs.org/download/nightly/) - but you probably already know that. For development, node.js 6 upwards is sufficient.
 
 [![npm](https://img.shields.io/npm/v/webassembly.svg)](https://www.npmjs.com/package/webassembly) [![build status](https://travis-ci.org/dcodeIO/webassembly.svg?branch=master)](https://travis-ci.org/dcodeIO/webassembly) [![Code Climate](https://codeclimate.com/github/dcodeIO/webassembly/badges/gpa.svg)](https://codeclimate.com/github/dcodeIO/webassembly) [![npm downloads](https://img.shields.io/npm/dm/webassembly.svg)](https://www.npmjs.com/package/webassembly)
 
@@ -114,24 +114,45 @@ Command line
 The `wa-compile` utility (also callable as `wa compile`, `wa comp`, `wa c`) compiles C code to a WebAssembly module.
 
 ```
-  -o, --out      Specifies the .wasm output file. Defaults to input file with .wasm extension.
-  -d, --debug    Prints debug information to stderr.
-  -q, --quiet    Suppresses informatory output.
-  -h, --headers  Includes the specified headers directory. Multiple are possible.
-  -i, --include  Includes the specified file. Multiple are possible.
+  -o, --out        Specifies the .wasm output file. Defaults to stdout.
+  -d, --debug      Prints debug information to stderr.
+  -q, --quiet      Suppresses informatory output.
 
   Module configuration:
 
-  -s, --stack    Specifies the stack size. Defaults to 10000.
-  -m, --main     Calls the specified function on start.
+  -O, --optimize   Optimizes the output file and removes dead code.
+  -s, --stack      Specifies the stack size. Defaults to 10000.
+  -m, --main       Executes the specified function on load.
+  -D, --define     Defines a macro.
+
+  Includes and libraries:
+
+  -I, --headers    Includes C headers from the specified directories.
+  -i, --include    Includes the specified source files.
+  -l, --link       Links in the specified libraries after compilation.
+  -b, --bare       Does not include the runtime library.
 
 usage: wa-compile [options] program.c
+```
+
+The `wa-link` utility (also callable as `wa link`, `wa ln`, `wa l`) linkes multiple WebAssembly modules to one.
+
+```
+  -o, --out      Specifies the .wasm output file. Defaults to write to stdout.
+  -d, --debug    Prints debug information to stderr.
+  -q, --quiet    Suppresses informatory output.
+
+  Module configuration:
+
+  -O, --optimize   Performs link-time optimizations.
+
+usage: wa-link [options] program1.wasm program2.wasm
 ```
 
 The `wa-disassemble` utility (also callable as `wa disassemble`, `wa dis`, `wa d`) decompiles a WebAssembly module to text format.
 
 ```
-  -o, --out      Specifies the .wast output file. Defaults to input file with .wast extension.
+  -o, --out      Specifies the .wast output file. Defaults to stdout.
   -d, --debug    Prints debug information to stderr.
   -q, --quiet    Suppresses informatory output.
 
@@ -141,9 +162,13 @@ usage: wa-disassemble [options] program.wasm
 The `wa-assemble` utility (also callable as `wa assemble`, `wa as`, `wa a`) assembles WebAssembly text format to a module.
 
 ```
-  -o, --out      Specifies the .wasm output file. Defaults to input file with .wasm extension.
-  -d, --debug    Prints debug information to stderr.
-  -q, --quiet    Suppresses informatory output.
+  -o, --out        Specifies the .wasm output file. Defaults to stdout.
+  -d, --debug      Prints debug information to stderr.
+  -q, --quiet      Suppresses informatory output.
+
+  Module configuration:
+
+  -O, --optimize   Optimizes the output file and removes dead code.
 
 usage: wa-assemble [options] program.wast
 ```

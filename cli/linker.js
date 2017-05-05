@@ -14,25 +14,30 @@ exports.main = (argv, callback) => {
         alias: {
             out: "o",
             debug: "d",
-            quiet: "q"
+            quiet: "q",
+            optimize: "O"
         },
         string: [ "out" ],
-        boolean: [ "debug", "quiet" ]
+        boolean: [ "debug", "quiet", "optimize" ]
     });
 
     // Validate arguments
 
     var files = argv._;
     if (files.length !== 1) {
-        util.printLogo("Disassembler");
+        util.printLogo("Linker");
         process.stderr.write([
-            chalk.bold.white("Disassembles a WebAssembly module to text format."),
+            chalk.bold.white("Links multiple WebAssembly modules to one."),
             "",
-            "  -o, --out      Specifies the .wast output file. Defaults to stdout.",
+            "  -o, --out      Specifies the .wasm output file. Defaults to write to stdout.",
             "  -d, --debug    Prints debug information to stderr.",
             "  -q, --quiet    Suppresses informatory output.",
             "",
-            "usage: " + chalk.bold.cyan("wa-disassemble") + " [options] program.wasm",
+            chalk.gray.bold("  Module configuration:"),
+            "",
+            "  -O, --optimize   Performs link-time optimizations.",
+            "",
+            "usage: " + chalk.bold.cyan("wa-link") + " [options] program1.wasm program2.wasm",
             ""
         ].join("\n"));
         process.nextTick(() => {
@@ -45,18 +50,18 @@ exports.main = (argv, callback) => {
     if (!platform)
         return 3;
 
-    var bindir = path.join("tools", "bin", platform);
-
     if (!argv.quiet)
-        process.stderr.write(chalk.bold.white("Disassembling on " + platform + " ...\n\n"));
+        process.stderr.write(chalk.bold.white("Linking on " + platform + " ...\n\n"));
 
-    var file = path.normalize(files[0]),
-        out = argv.out && path.normalize(argv.out) || undefined;
+    files = files.map(file => path.normalize(file));
 
-    util.run(path.join(util.basedir, bindir, "wasm-dis"), [
-        [ argv.debug && "-d" || undefined ],
+    var out = argv.out && path.normalize(argv.out) || undefined;
+
+    util.run(path.join(util.bindir, "wasm-merge"), [
+        [ argv.debug && "--debug" || undefined ],
+        [ argv.optimize && "-O" || undefined ],
         [ "-o", out ],
-        file
+        files
     ], argv).then(() => {
 
         finish();

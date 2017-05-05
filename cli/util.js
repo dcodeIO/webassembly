@@ -1,11 +1,14 @@
 var child_process = require("child_process"),
     chalk = require("chalk"),
     path  = require("path"),
-    fs    = require("fs");
+    fs    = require("fs"),
+    pkg   = require("../package.json");
 
-// Expose utility
+exports.basedir = path.join(__dirname, "..");
 
-function run(cmd, argv, options) {
+exports.bindir = path.join(__dirname, "..", "tools", "bin", process.platform + "-" + process.arch);
+
+exports.run = function run(cmd, argv, options) {
     if (!argv)
         argv = [];
     var index = 0;
@@ -21,7 +24,7 @@ function run(cmd, argv, options) {
             ++index;
     }
     if (!(options && options.quiet))
-        process.stderr.write(chalk.white.bold(path.basename(cmd)) + " " + argv.map((arg, i) => i === argv.length - 1 || arg.charAt(0) === "-" ? "\n " + arg : arg).join(" ") + "\n\n");
+        process.stderr.write(chalk.cyan.bold(path.basename(cmd)) + " " + argv.map((arg) => arg.charAt(0) === "-" ? "\n " + arg : chalk.gray.bold(arg)).join(" ") + "\n\n");
     return new Promise(function(resolve, reject) {
         var proc = child_process.spawn(cmd, argv, { stdio: "inherit" });
         proc.on("close", function(code) {
@@ -34,24 +37,29 @@ function run(cmd, argv, options) {
             reject(err);
         });
     });
-}
+};
 
-exports.run = run;
-
-exports.platform = function platform() {
+exports.checkPlatform = function checkPlatform(callback) {
     var target = process.platform + "-" + process.arch;
     if (fs.existsSync(path.join(__dirname, "..", "tools", "bin", target)))
         return target;
-    platform.target = target;
+    if (callback)
+        callback(Error("platform binaries not found for " + target));
     return null;
-}
+};
 
-exports.logo = function logo(text) {
+exports.printLogo = function printLogo(text) {
+    text = text ? " " + text : "";
     process.stderr.write(([
         "",
         chalk.gray.bold("┌────┐"),
         chalk.gray.bold("│    │"),
-        chalk.gray.bold("│  ") + chalk.white.bold("WebAssembly") + " " + text,
+        chalk.gray.bold("│  ") + chalk.white.bold("webassembly") + " v" + pkg.version + text,
         chalk.gray.bold("└────┘")
     ].join("\n") + "\n\n"));
-}
+};
+
+exports.defaultCallback = function defaultCallback(err) {
+    if (err)
+        process.stderr.write(chalk.red.bold("FAILED") + " " + err.stack + "\n");
+};

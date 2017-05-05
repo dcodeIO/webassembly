@@ -19,15 +19,18 @@ cd "%~dp0binaryen\build"
 "%msbuild.exe%" s2wasm.vcxproj /p:Configuration="Release"
 "%msbuild.exe%" wasm-dis.vcxproj /p:Configuration="Release"
 "%msbuild.exe%" wasm-opt.vcxproj /p:Configuration="Release"
+"%msbuild.exe%" wasm-merge.vcxproj /p:Configuration="Release"
+
+echo Archiving ...
 
 cd "%~dp0"
-
 powershell -nologo -noprofile -command Compress-Archive^
  -LiteralPath^
  llvm\build\Release\bin\clang.exe,^
  binaryen\build\bin\s2wasm.exe,^
  binaryen\build\bin\wasm-dis.exe,^
  binaryen\build\bin\wasm-opt.exe,^
+ binaryen\build\bin\wasm-merge.exe,^
  bin\LICENSE-LLVM,^
  bin\LICENSE-BINARYEN^
  -DestinationPath^

@@ -25,7 +25,6 @@ echo "Configuring binaryen ..."
 test -e "$dp/binaryen/build" || mkdir "$dp/binaryen/build"
 cd "$dp/binaryen/build"
 
-test -e "/opt/cmake/bin/cmake" && CMAKE="/opt/cmake/bin/cmake" || CMAKE="cmake"
 $CMAKE\
  -DCMAKE_EXE_LINKER_FLAGS="-static-libgcc -static-libstdc++"\
  -DCMAKE_BUILD_TYPE="Release"\

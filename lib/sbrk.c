@@ -1,7 +1,5 @@
 #include <webassembly.h>
 
-#define grow_memory(v) __builtin_wasm_grow_memory(v)
-
 static unsigned int available = 0;
 
 void *sbrk(ptrdiff_t increment) {

@@ -11,7 +11,6 @@ var https = require('follow-redirects').https,
 var platform = process.platform + "-" + process.arch,
     temp = tmp.fileSync({ prefix: "wa-tools-" }),
     file = fs.createWriteStream(temp.name),
-    bindir = path.join(__dirname, "..", "tools", "bin", platform),
     archive = "tools-" + platform + (/^win32/.test(platform) ? ".zip" : ".tar.gz");
 
 function download(callback) {
@@ -22,7 +21,7 @@ function download(callback) {
             return;
         }
         var total = res.headers["content-length"],
-            current = 0.
+            current = 0,
             lastPercent = 0;
         res.on("error", function(err) {
             callback(err);
@@ -47,23 +46,22 @@ function download(callback) {
 }
 
 function install(file, callback) {
-    var bindir = path.join(__dirname, "..", "tools", "bin", platform);
-    fs.mkdir(bindir, function() {
+    fs.mkdir(util.bindir, function() {
         if (/\.zip$/.test(archive))
-            unzip(file, { dir: bindir }, callback);
+            unzip(file, { dir: util.bindir }, callback);
         else
-            targz().extract(file, bindir, callback);
+            targz().extract(file, util.bindir, callback);
     });
 }
 
-util.logo("v" + pkg.version + " Setup");
+util.printLogo("Setup");
 process.stdout.write(chalk.white.bold("Downloading binaries for " + platform + " ...") + "\n");
 download(function(err, file) {
     if (err) {
         process.stderr.write("\n");
         throw err;
     }
-    process.stdout.write(chalk.white.bold("Installing binaries to " + path.relative(process.cwd(), bindir) + " ...") + "\nPlease hold on ... ");
+    process.stdout.write(chalk.white.bold("Installing binaries to " + path.relative(process.cwd(), util.bindir) + " ...") + "\nPlease hang on ... ");
     install(file, function(err) {
         if (err)
             throw err;

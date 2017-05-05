@@ -32,12 +32,21 @@ function load(file, options) {
     if (!options)
         options = {};
 
+    var imports = options.imports || {};
+
     // Initialize memory
 
-    var opts = { initial: options.initialMemory || 1 };
-    if (options.maximumMemory)
-        opts.maximum = options.maximumMemory;
-    var memory = new WebAssembly.Memory(opts);
+    var memory = imports.memory;
+    if (!memory) {
+        var opts = { initial: options.initialMemory || 1 };
+        if (options.maximumMemory)
+            opts.maximum = options.maximumMemory;
+        memory = new WebAssembly.Memory(opts);
+    }
+
+    var table = imports.table;
+    if (!table)
+        table = new WebAssembly.Table({ initial: 0, element: "anyfunc" });
 
     grow();
 
@@ -80,7 +89,11 @@ function load(file, options) {
 
     var env = {};
 
+    env.memoryBase = imports.memoryBase || 0;
+    env.tableBase = imports.tableBase || 0;
+
     env.memory = memory;
+    env.table = table;
 
     function abort() {
         throw Error("out of memory in " + file);
@@ -148,9 +161,8 @@ function load(file, options) {
 
     // Add imports to environment
 
-    if (options.imports)
-        for (var i = 0, ks = Object.keys(options.imports); i < ks.length; ++i)
-            env[ks[i]] = options.imports[ks[i]];
+    for (var i = 0, ks = Object.keys(imports); i < ks.length; ++i)
+        env[ks[i]] = imports[ks[i]];
 
     // Fetch the assembly and instantiate it
 

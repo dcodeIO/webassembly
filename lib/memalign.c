@@ -23,6 +23,8 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+#define SIZE_MAX __SIZE_MAX__
+
 void *memalign(size_t align, size_t len)
 {
 	unsigned char *mem, *new, *end;

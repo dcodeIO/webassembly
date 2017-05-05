@@ -16,18 +16,15 @@
 #define NO_MALLOC_STATS 1
 #define INSECURE 0
 #define MALLINFO_FIELD_TYPE int
-#define DLMALLOC_EXPORT static __attribute__((always_inline))
+#define DLMALLOC_EXPORT static inline
 #define HAVE_MMAP 0
 #define HAVE_MORECORE 1
 #define USE_DL_PREFIX 1
 #define MALLOC_FAILURE_ACTION
+#define malloc_getpagesize 1<<16
 
 #define ABORT _abort()
-#define ENOMEM 12
-#define EINVAL 22
 #define SIZE_MAX __SIZE_MAX__
-
-static int errno = 0;
 
 #include "dlmalloc/malloc.c"
 

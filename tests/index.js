@@ -9,8 +9,8 @@ tap.test("compiler", function(test) {
     compiler.main([
         "--main", "main",
         "-q",
-        "-o", "tests/test.wasm",
-        "tests/test.c"
+        "-o", "tests/simple/test.wasm",
+        "tests/simple/test.c"
     ], function(err) {
         test.notOk(err, "should not raise an error");
         test.done();
@@ -19,9 +19,9 @@ tap.test("compiler", function(test) {
 
 tap.test("disassembler", function(test) {
     disassembler.main([
-        "-o", "tests/test.wast",
+        "-o", "tests/simple/test.wast",
         "-q",
-        "tests/test.wasm"
+        "tests/simple/test.wasm"
     ], function(err) {
         test.notOk(err, "should not raise an error");
         test.done();
@@ -30,12 +30,12 @@ tap.test("disassembler", function(test) {
 
 tap.test("assembler", function(test) {
     assembler.main([
-        "-o", "tests/test-as.wasm",
+        "-o", "tests/simple/test-as.wasm",
         "-q",
-        "tests/test.wast"
+        "tests/simple/test.wast"
     ], function(err) {
         test.notOk(err, "should not raise an error");
-        fs.unlink("tests/test-as.wasm", function(err) {
+        fs.unlink("tests/simple/test-as.wasm", function() {
             test.done();
         });
     });

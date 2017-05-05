@@ -7,7 +7,11 @@
             "command": "node",
             "args": [
                 "${workspaceRoot}/bin/wa-compile",
-                "tests/bcrypt/bcrypt.c"
+                "-O",
+                "-m", "main",
+                "-o", "tests/simple/test.wasm",
+                "-D", "EXPORT_MALLOC",
+                "tests/simple/test.c"
             ],
             "isShellCommand": true,
             "isBuildCommand": true,

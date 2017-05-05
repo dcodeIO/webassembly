@@ -1,15 +1,14 @@
 var minimist = require("minimist"),
     chalk    = require("chalk"),
     path     = require("path"),
-    util     = require("../cli/util"),
-    pkg      = require("../package.json");
+    util     = require("../cli/util");
 
-var defaults = require("./assembler.json");
+var optimizeFinal = require("./config/optimize-final.json");
 
 exports.main = (argv, callback) => {
 
     if (!callback)
-        callback = () => {};
+        callback = util.defaultCallback;
 
     // Define arguments
 
@@ -17,23 +16,28 @@ exports.main = (argv, callback) => {
         alias: {
             out: "o",
             debug: "d",
-            quiet: "q"
+            quiet: "q",
+            optimize: "O"
         },
         string: [ "out" ],
-        boolean: [ "debug", "quiet" ]
+        boolean: [ "debug", "quiet", "optimize" ]
     });
 
     // Validate arguments
 
     var files = argv._;
     if (files.length !== 1) {
-        util.logo("v" + pkg.version + " Assembler");
+        util.printLogo("Assembler");
         process.stderr.write([
             chalk.bold.white("Assembles WebAssembly text format to a module."),
             "",
-            "  -o, --out      Specifies the .wasm output file. Defaults to input file with .wasm extension.",
-            "  -d, --debug    Prints debug information to stderr.",
-            "  -q, --quiet    Suppresses informatory output.",
+            "  -o, --out        Specifies the .wasm output file. Defaults to stdout.",
+            "  -d, --debug      Prints debug information to stderr.",
+            "  -q, --quiet      Suppresses informatory output.",
+            "",
+            chalk.gray.bold("  Module configuration:"),
+            "",
+            "  -O, --optimize   Optimizes the output file and removes dead code.",
             "",
             "usage: " + chalk.bold.cyan("wa-assemble") + " [options] program.wast",
             ""
@@ -44,37 +48,30 @@ exports.main = (argv, callback) => {
         return 1;
     }
 
-    // Check platform
-
-    var platform = util.platform();
-    if (!platform) {
-        var err = Error("platform binaries not found for " + util.platform.target);
-        callback(err);
+    var platform = util.checkPlatform(callback);
+    if (!platform)
         return 3;
-    }
-
-    var bindir = path.join("tools", "bin", platform);
 
     if (!argv.quiet)
         process.stderr.write(chalk.bold.white("Assembling on " + platform + " ...\n\n"));
 
-    var run = util.run,
-        basedir = path.join(__dirname, ".."),
-        file = path.normalize(files[0]),
-        out = argv.out && path.normalize(argv.out) || path.join(path.dirname(file), path.basename(file, ".wast") + ".wasm");
+    var file = path.normalize(files[0]),
+        out = argv.out && path.normalize(argv.out) || undefined;
 
-    run(path.join(basedir, bindir, "wasm-opt"), [
-        defaults,
+    util.run(path.join(util.bindir, "wasm-opt"), [
+        argv.optimize && optimizeFinal || [],
         [ argv.debug && "-d" || undefined ],
-        "-o", out,
+        [ "-o", out ],
         file
     ], argv).then(() => {
 
-    if (!argv.quiet)
-        process.stderr.write(chalk.green.bold("SUCCESS") + "\n");
-
-    callback(null, out);
+        finish();
 
     }, callback);
 
+    function finish() {
+        if (!argv.quiet)
+            process.stderr.write(chalk.green.bold("SUCCESS") + "\n");
+        callback(null, out);
+    }
 };
