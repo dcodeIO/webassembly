@@ -198,4 +198,13 @@ I am using:
 * [Visual Studio Code](https://code.visualstudio.com/) (example [Ctrl+Shift+B task](https://github.com/dcodeIO/webassembly/blob/master/.vscode/tasks.json))
 * with [C/C++ for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools) (example [config](https://github.com/dcodeIO/webassembly/blob/master/.vscode/c_cpp_properties.json))
 
-License: [BSD 3-Clause License](https://opensource.org/licenses/BSD-3-Clause). Includes parts of [musl](http://www.musl-libc.org/) ([MIT License](https://opensource.org/licenses/MIT)) and [binaryen](https://github.com/WebAssembly/binaryen) ([Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0)). WebAssembly logo by Carlos Baraza ([CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)).
+---
+
+License: [BSD 3-Clause License](https://opensource.org/licenses/BSD-3-Clause).
+
+Includes parts of
+* [musl](http://www.musl-libc.org/) ([MIT License](https://opensource.org/licenses/MIT))
+* [dlmalloc](http://g.oswego.edu/dl/html/malloc.html) ([CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/))
+* [binaryen](https://github.com/WebAssembly/binaryen) ([Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0))
+
+WebAssembly logo by Carlos Baraza ([CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)).

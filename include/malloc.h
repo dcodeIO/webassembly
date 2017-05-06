@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../webassembly/module.h"
+#include "webassembly/module.h"
 #include "stdint.h"
 
 #ifdef __cplusplus

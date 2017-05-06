@@ -96,10 +96,7 @@ exports.main = (argv, callback) => {
 
     includeArgs.push("-D", "WEBASSEMBLY");
     defines.forEach(def  => { includeArgs.push("-D", def); });
-    includeArgs.push(
-        "-I", path.join(util.basedir, "include"),
-        "-I", path.join(util.basedir, "include", "stdlib")
-    );
+    includeArgs.push("-I", path.join(util.basedir, "include"));
     headers.forEach(file => { includeArgs.push("-I", file); });
     if (!argv.bare)
         includeArgs.push("--include", path.join(util.basedir, "lib/webassembly.c"));

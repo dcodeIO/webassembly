@@ -16,30 +16,12 @@
 #define NO_MALLOC_STATS 1
 #define INSECURE 0
 #define MALLINFO_FIELD_TYPE int
-#define DLMALLOC_EXPORT static inline
+#define DLMALLOC_EXPORT
 #define HAVE_MMAP 0
 #define HAVE_MORECORE 1
-#define USE_DL_PREFIX 1
+#define USE_DL_PREFIX 0
 #define MALLOC_FAILURE_ACTION
-#define malloc_getpagesize 1<<16
+#define malloc_getpagesize 1 << 16
 
 #define ABORT _abort()
 #define SIZE_MAX __SIZE_MAX__
-
-#include "dlmalloc/malloc.c"
-
-void* malloc(unsigned int size) {
-    return dlmalloc(size);
-}
-
-void free(void* ptr) {
-    dlfree(ptr);
-}
-
-void* realloc(void* p, size_t n) {
-    return dlrealloc(p, n);
-}
-
-void* calloc(size_t n_elements, size_t element_size) {
-    return dlcalloc(n_elements, element_size);
-}

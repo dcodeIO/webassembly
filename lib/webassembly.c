@@ -1,11 +1,27 @@
 // Haven't found a way to do proper linking, yet, so this is included
 // in compilation instead of being linked.
 
-int errno = 0;
+#include "sys/brk.c"
+#include "sys/sbrk.c"
 
-#include "sbrk.c"
-#include "memcpy.c"
-#include "memalign.c"
-#include "memmove.c"
-#include "memset.c"
-#include "malloc.c"
+#include "errno/errno.c"
+
+#include "string/memcpy.c"
+#include "string/memalign.c"
+#include "string/memmove.c"
+#include "string/memset.c"
+
+#include "wchar/wcscmp.c"
+#include "wchar/wcscpy.c"
+#include "wchar/wcslen.c"
+#include "wchar/wcsncmp.c"
+#include "wchar/wcsncpy.c"
+#include "wchar/wmemcmp.c"
+#include "wchar/wmemcpy.c"
+#include "wchar/wmemmove.c"
+#include "wchar/wmemset.c"
+
+#include "malloc/malloc.c"
+
+#include "stdlib/abs.c"
+#include "stdlib/div.c"

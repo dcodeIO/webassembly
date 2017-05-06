@@ -15,4 +15,4 @@ tools/clang/
 tools/compiler-rt/
 tools/lld
 tools/binaryen/
-lib/musl/
+tools/musl/

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "module.h"
-#include <math.h>
+#include "../math.h"
 
 WEBASSEMBLY_IMPORT double       Math_abs(double);
 WEBASSEMBLY_IMPORT double       Math_acos(double);

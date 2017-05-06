@@ -1,4 +1,5 @@
-#include <webassembly.h>
+#include <stdint.h>
+#include <webassembly/memory.h>
 
 static unsigned int available = 0;
 
@@ -19,8 +20,4 @@ void *sbrk(ptrdiff_t increment) {
     unsigned int offset = total - available;
     available -= increment;
     return (void *)offset;
-}
-
-int brk(void *end_data_segment) {
-    return -1;
 }
