@@ -6,6 +6,7 @@ SET prev=%cd%
 echo Configuring LLVM/Clang ...
 
 IF NOT EXIST "%~dp0llvm\tools\clang" mklink /D "%~dp0llvm\tools\clang" "%~dp0clang"
+IF NOT EXIST "%~dp0llvm\tools\lld" mklink /D "%~dp0llvm\tools\lld" "%~dp0lld"
 IF NOT EXIST "%~dp0llvm\projects\compiler-rt" mklink /D "%~dp0llvm\projects\compiler-rt" "%~dp0compiler-rt"
 IF NOT EXIST "%~dp0llvm\build" mkdir "%~dp0llvm\build"
 cd "%~dp0llvm\build"

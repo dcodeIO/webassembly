@@ -82,6 +82,7 @@ exports.main = (argv, callback) => {
         tmp.fileSync({ prefix: "wa-1-" }),
         tmp.fileSync({ prefix: "wa-2-" })
     ];
+    temp.index = 0;
 
     var file = path.normalize(files[0]),
         out = argv.out && path.normalize(argv.out) || undefined;
@@ -92,49 +93,53 @@ exports.main = (argv, callback) => {
         links   = argv.link    && typeof argv.link    === "string" && [ argv.link    ] || argv.link    || [];
 
     var includeArgs = [];
+
+    includeArgs.push("-D", "WEBASSEMBLY");
+    defines.forEach(def  => { includeArgs.push("-D", def); });
+    includeArgs.push(
+        "-I", path.join(util.basedir, "include"),
+        "-I", path.join(util.basedir, "include", "stdlib")
+    );
+    headers.forEach(file => { includeArgs.push("-I", file); });
     if (!argv.bare)
         includeArgs.push("--include", path.join(util.basedir, "lib/webassembly.c"));
-        // links.unshift(path.join(util.basedir, "lib/webassembly.wast"));
-        /* wasm-merge doesn't work, randomly throws:
-           1) Expression: map/set iterator not dereferencable
-           2)
-           merged total memory size: 4
-           merged total table size: 0
-           merged functions: 36
-           FAILED Error: code 3221225477 */
-
-    headers.forEach(file => { includeArgs.push("-I", file); });
     include.forEach(file => { includeArgs.push("-include", file); });
-    defines.forEach(def  => { includeArgs.push("-D" + def); });
 
     var p =
 
     util.run(path.join(util.bindir, "clang"), [
         file,
         "-S",
-        "-D__WEBASSEMBLY__",
+        argv.bare || links.length || !argv.optimize ? undefined : "-O",
         "-nostdinc",
-        "-I", path.join(util.basedir, "include"),
-        "-I", path.join(util.basedir, "include", "stdlib"),
+        "-nostdlib",
         includeArgs,
         [ argv.debug && "-v" || undefined ],
-        "-o", temp[0].name
+        "-o", temp[temp.index %= temp.length].name
     ], argv).then(() =>
 
+    /* util.run(path.join(util.bindir, "llc"), [
+        temp[temp.index++].name,
+        "-march=wasm32",
+        "-filetype=asm",
+        "-asm-verbose=false",
+        "-o", temp[temp.index %= temp.length].name
+    ], argv)).then(() => */
+
     util.run(path.join(util.bindir, "s2wasm"), [
-        temp[0].name,
+        temp[temp.index++].name,
         "--import-memory" ,
         argv.bare ? undefined : [ "--allocate-stack", argv.stack || "10000" ],
         [ "--start", argv.main ],
-        argv.debug ? "-d" : undefined,
-        "-o", temp[1].name
+        argv.debug ? "--debug" : undefined,
+        "-o", temp[temp.index %= temp.length].name
     ], argv)).then(() =>
 
     util.run(path.join(util.bindir, "wasm-opt"), [
-        temp[1].name,
+        temp[temp.index++].name,
         argv.optimize && (links.length || argv.bare ? optimizeLink : optimizeFinal) || [],
         argv.debug ? "--debug" : undefined,
-        [ "-o", links.length ? temp[0].name : out ]
+        [ "-o", links.length ? temp[temp.index %= temp.length].name : out ]
     ], argv));
 
     if (links.length)  {
@@ -143,16 +148,16 @@ exports.main = (argv, callback) => {
 
         util.run(path.join(util.bindir, "wasm-merge"), [
             links,
-            temp[0].name,
+            temp[temp.index++].name,
             argv.optimize ? "-O" : undefined,
             argv.debug ? "-d" : undefined,
-            [ "-o", argv.optimize ? temp[1].name : out ]
+            [ "-o", argv.optimize ? temp[temp.index %= temp.length].name : out ]
         ], argv));
 
         if (argv.optimize) p = p.then(() => 
 
             util.run(path.join(util.bindir, "wasm-opt"), [
-                temp[1].name,
+                temp[temp.index++].name,
                 optimizeFinal,
                 argv.debug ? "-d" : undefined,
                 [ "-o", out ]

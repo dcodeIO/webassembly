@@ -1,0 +1,4 @@
+#!/usr/bin/env node
+var ret = require("../cli/linker").main(process.argv.slice(2));
+if (typeof ret === "number")
+    process.exit(ret);

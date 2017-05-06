@@ -5,6 +5,7 @@ dp="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo "Configuring LLVM/Clang ..."
 
 test -e "$dp/llvm/tools/clang" || ln -s "$dp/clang" "$dp/llvm/tools/clang"
+test -e "$dp/llvm/tools/lld" || ln -s "$dp/lld" "$dp/llvm/tools/lld"
 test -e "$dp/llvm/projects/compiler-rt" || ln -s "$dp/compiler-rt" "$dp/llvm/projects/compiler-rt"
 test -e "$dp/llvm/build" || mkdir "$dp/llvm/build"
 cd "$dp/llvm/build"

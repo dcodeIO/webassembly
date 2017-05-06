@@ -3,6 +3,10 @@
 #include <webassembly/module.h>
 #include "stdint.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifdef EXPORT_MEMCPY
 WEBASSEMBLY_EXPORT
 #endif
@@ -27,3 +31,7 @@ void *memalign(size_t align, size_t len);
 WEBASSEMBLY_EXPORT
 #endif
 size_t strlen(const char *s);
+
+#ifdef __cplusplus
+}
+#endif
