@@ -11,7 +11,7 @@
 	path = tools/clang
 	url = https://github.com/llvm-mirror/clang.git
 [submodule "lib/musl"]
-	path = tools/musl
+	path = lib/musl
 	url = git://git.musl-libc.org/musl
 [submodule "tools/lld"]
 	path = tools/lld

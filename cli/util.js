@@ -11,6 +11,8 @@ exports.bindir = path.join(__dirname, "..", "tools", "bin", process.platform + "
 exports.run = function run(cmd, argv, options) {
     if (!argv)
         argv = [];
+    if (!options)
+        options = {};
     var index = 0;
     while (index < argv.length) {
         if (argv[index] == null)
@@ -25,8 +27,10 @@ exports.run = function run(cmd, argv, options) {
     }
     if (!(options && options.quiet))
         process.stderr.write(chalk.cyan.bold(path.basename(cmd)) + " " + argv.map((arg) => arg.charAt(0) === "-" ? "\n " + arg : chalk.gray.bold(arg)).join(" ") + "\n\n");
+    if (!options.stdio)
+        options.stdio = "inherit";
     return new Promise(function(resolve, reject) {
-        var proc = child_process.spawn(cmd, argv, { stdio: "inherit" });
+        var proc = child_process.spawn(cmd, argv, options);
         proc.on("close", function(code) {
             if (code === 0)
                 resolve();
@@ -57,6 +61,10 @@ exports.printLogo = function printLogo(text) {
         chalk.gray.bold("│  ") + chalk.white.bold("webassembly") + " v" + pkg.version + text,
         chalk.gray.bold("└────┘")
     ].join("\n") + "\n\n"));
+};
+
+exports.defaultSuccess = function() {
+    process.stderr.write(chalk.green.bold("SUCCESS") + "\n");
 };
 
 exports.defaultCallback = function defaultCallback(err) {

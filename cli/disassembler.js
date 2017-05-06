@@ -65,7 +65,7 @@ exports.main = (argv, callback) => {
 
     function finish() {
         if (!argv.quiet)
-            process.stderr.write(chalk.green.bold("SUCCESS") + "\n");
+            util.defaultSuccess();
         callback(null, out);
     }
 };

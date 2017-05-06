@@ -57,15 +57,13 @@ exports.main = (argv, callback) => {
             "",
             "  -I, --headers    Includes C headers from the specified directories.",
             "  -i, --include    Includes the specified source files.",
-            "  -l, --link       Links in the specified libraries after compilation.",
+         // "  -l, --link       Links in the specified libraries after compilation.",
             "  -b, --bare       Does not include the runtime library.",
             "",
             "usage: " + chalk.bold.cyan("wa-compile") + " [options] program.c",
             ""
         ].join("\n"));
-        process.nextTick(() => {
-            callback(Error("usage"));
-        });
+        process.nextTick(() => { callback(Error("usage")); });
         return 1;
     }
 
@@ -79,8 +77,8 @@ exports.main = (argv, callback) => {
     tmp.setGracefulCleanup();
 
     var temp = [
-        tmp.fileSync({ prefix: "wa-1-" }),
-        tmp.fileSync({ prefix: "wa-2-" })
+        tmp.fileSync({ prefix: "wa1_" }),
+        tmp.fileSync({ prefix: "wa2_" })
     ];
     temp.index = 0;
 
@@ -96,32 +94,54 @@ exports.main = (argv, callback) => {
 
     includeArgs.push("-D", "WEBASSEMBLY");
     defines.forEach(def  => { includeArgs.push("-D", def); });
-    includeArgs.push("-I", path.join(util.basedir, "include"));
+    includeArgs.push(
+        "-isystem", path.join(util.basedir, "lib/musl/include"),
+        "-isystem", path.join(util.basedir, "lib/musl-wasm32/include"),
+        "-isystem", path.join(util.basedir, "include")
+    );
     headers.forEach(file => { includeArgs.push("-I", file); });
-    if (!argv.bare)
-        includeArgs.push("--include", path.join(util.basedir, "lib/webassembly.c"));
     include.forEach(file => { includeArgs.push("-include", file); });
 
     var p =
+
+    // Compile to LLVM bitcode
 
     util.run(path.join(util.bindir, "clang"), [
         file,
         "-S",
         argv.bare || links.length || !argv.optimize ? undefined : "-O",
+        "-emit-llvm",
         "-nostdinc",
         "-nostdlib",
         includeArgs,
         [ argv.debug && "-v" || undefined ],
         "-o", temp[temp.index %= temp.length].name
-    ], argv).then(() =>
+    ], argv);
 
-    /* util.run(path.join(util.bindir, "llc"), [
+    // Link with webassembly / libc
+
+    if (!argv.bare) p = p.then(() =>
+
+        util.run(path.join(util.bindir, "llvm-link"), [
+            temp[temp.index++].name,
+            path.join(util.basedir, "lib", "webassembly.bc"),
+            "-only-needed",
+            "-o", temp[temp.index %= temp.length].name
+        ], argv));
+
+    // Compile to assembly language
+
+    p = p.then(() =>
+
+    util.run(path.join(util.bindir, "llc"), [
         temp[temp.index++].name,
         "-march=wasm32",
         "-filetype=asm",
         "-asm-verbose=false",
         "-o", temp[temp.index %= temp.length].name
-    ], argv)).then(() => */
+    ], argv)).then(() =>
+
+    // Convert to WebAssembly module
 
     util.run(path.join(util.bindir, "s2wasm"), [
         temp[temp.index++].name,
@@ -132,6 +152,8 @@ exports.main = (argv, callback) => {
         "-o", temp[temp.index %= temp.length].name
     ], argv)).then(() =>
 
+    // (Pre-)Optimize module
+
     util.run(path.join(util.bindir, "wasm-opt"), [
         temp[temp.index++].name,
         argv.optimize && (links.length || argv.bare ? optimizeLink : optimizeFinal) || [],
@@ -139,9 +161,9 @@ exports.main = (argv, callback) => {
         [ "-o", links.length ? temp[temp.index %= temp.length].name : out ]
     ], argv));
 
-    if (links.length)  {
+    // If applicable, link with other webassembly modules and perform final optimizations
 
-        p = p.then(() => 
+    if (links.length)  { p = p.then(() => 
 
         util.run(path.join(util.bindir, "wasm-merge"), [
             links,
@@ -166,7 +188,7 @@ exports.main = (argv, callback) => {
 
     function finish() {
         if (!argv.quiet)
-            process.stderr.write(chalk.green.bold("SUCCESS") + "\n");
+            util.defaultSuccess();
         callback(null, out);
     }
 };

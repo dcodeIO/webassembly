@@ -10,7 +10,6 @@
                 "-O",
                 "-m", "main",
                 "-o", "tests/simple/test.wasm",
-                "-D", "EXPORT_MALLOC",
                 "tests/simple/test.c"
             ],
             "isShellCommand": true,

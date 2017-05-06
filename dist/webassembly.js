@@ -139,27 +139,30 @@ function load(file, options) {
             env["console_" + key] = function(ptr, base) {
                 var s = getString(ptr);
                 if (base)
-                    s = s.replace(/%([dfisu])/g, function($0, $1) {
+                    s = s.replace(/%(d|i|u|f|lf|s)/g, function($0, $1) {
                         var value;
                         switch ($1) {
-                            case "d":
-                                value = getDouble(base);
+                            default:
+                                value = getInt(base);
+                                base += 4;
+                                break;
+                            case "u":
+                                value = getUint(base);
                                 base += 4;
                                 break;
                             case "f":
                                 value = getFloat(base);
+                                base += 4;
                                 break;
-                            case "i":
-                                value = getInt(base);
+                            case "lf":
+                                value = getDouble(base);
+                                base += 8;
                                 break;
                             case "s":
                                 value = getString(getUint(base));
-                                break;
-                            case "u":
-                                value = getUint(base);
+                                base += 4;
                                 break;
                         }
-                        base += 4;
                         return value;
                     });
                 return console[key](s); // eslint-disable-line no-console

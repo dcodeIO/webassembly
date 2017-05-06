@@ -78,17 +78,15 @@ C features available out of the box:
 * `malloc`, `free`, `realloc` and `calloc` (dlmalloc)
 * `memcpy`, `memmove`, `memalign`, `memset` and `strlen` (musl)
 
-Malloc and friends can be explicitly exported to JS by defining `EXPORT_<FUNCNAME>`, i.e. `#define EXPORT_MALLOC`.
-
 Console functions accept the following string substitutions with variable arguments:
 
-| Subst. | C type                      | Description
-|--------|-----------------------------|-------------------------
-| `%i`   | `int` / `int32_t`           | Signed 32 bit integer
-| `%u`   | `unsigned int` / `uint32_t` | Unsigned 32 bit integer
-| `%f`   | `float`                     | 32 bit float
-| `%d`   | `double`                    | 64 bit double
-| `%s`   | `char *`                    | String (zero terminated)
+| Subst.     | C type                      | Description
+|------------|-----------------------------|-------------------------
+| `%d`, `%i` | `int` / `int32_t`           | Signed 32 bit integer
+| `%u`       | `unsigned int` / `uint32_t` | Unsigned 32 bit integer
+| `%f`       | `float`                     | 32 bit float
+| `%lf`      | `double`                    | 64 bit double
+| `%s`       | `char *`                    | String (zero terminated)
 
 For now, math is (mostly) performed on 64 bit IEEE754 floating point operands as provided by the browser.
 
