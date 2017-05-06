@@ -150,13 +150,7 @@ function load(file, options) {
 
     getOwnPropertyNames(Math).forEach(function(key) {
         if (typeof Math[key] === "function")
-            env["Math_" + key] = function() {
-                var args = new Array(arguments.length),
-                    index = 0;
-                while (index < args.length)
-                    args[index] = arguments[index++];
-                return Math[key].apply(Math, args);
-            }
+            env["Math_" + key] = Math[key];
     });
 
     // Add imports to environment
