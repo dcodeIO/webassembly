@@ -4,9 +4,9 @@
 #define WEBASSEMBLY_EXPORT __attribute__ ((visibility ("default")))
 
 #ifndef import
-  #define import WEBASSEMBLY_IMPORT
+#define import WEBASSEMBLY_IMPORT
 #endif
 
 #ifndef export
-  #define export WEBASSEMBLY_EXPORT
+#define export WEBASSEMBLY_EXPORT
 #endif

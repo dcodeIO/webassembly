@@ -63,6 +63,10 @@ exports.printLogo = function printLogo(text) {
     ].join("\n") + "\n\n"));
 };
 
+exports.printHeading = function printHeading(text) {
+    process.stderr.write(chalk.bold.white(text + "\n\n"));
+};
+
 exports.defaultSuccess = function() {
     process.stderr.write(chalk.green.bold("SUCCESS") + "\n");
 };

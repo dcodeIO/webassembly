@@ -1,14 +1,12 @@
 <script src="../../dist/webassembly.js"></script>
 <script>
-var exports,
-    env;
+var module,
+    exports;
 
-webassembly.load("test.wasm").then(function(module) {
-    console.log(module);
-    exports = module.exports;
-    env = module.env;
+webassembly.load("test.wasm").then(function(module_) {
+    exports = (module = module_).exports;
     console.log("1. Open the console");
-    console.log("2. Begin typing \"exports.\" or \"env.\" to access them.");
+    console.log("2. Begin typing \"exports.\" or \"module.\" to access them.");
 });
 
 // ignore this

@@ -17,8 +17,8 @@ var llvmSourceDir     = path.join(util.basedir, "tools", "llvm"),
 var binaryenSourceDir = path.join(util.basedir, "tools", "binaryen"),
     binaryenBuildDir  = path.join(util.basedir, "tools", "build", "binaryen");
 
-util.printLogo("Tools");
-process.stderr.write(chalk.white.bold("Building on " + process.platform + "-" + process.arch + " ...") + "\n\n");
+util.printLogo("Platform Tools");
+util.printHeading("Building on " + process.platform + "-" + process.arch + " ...");
 
 var p =
 
@@ -50,7 +50,7 @@ util.run(process.env.CMAKE || "cmake", [
 
 var MSBUILD;
 
-if (isWindows) p = p.then(() => 
+if (isWindows) p = p.then(() =>
 
     // Find msbuild
 
@@ -76,7 +76,7 @@ if (isWindows) p = p.then(() =>
         "/p:Configuration=Release",
         "/maxcpucount:" + cpus
 
-    ], { cwd: llvmBuildDir })).then(() => 
+    ], { cwd: llvmBuildDir })).then(() =>
 
     util.run(MSBUILD, [
 
@@ -84,7 +84,7 @@ if (isWindows) p = p.then(() =>
         "/p:Configuration=Release",
         "/maxcpucount:" + cpus
 
-    ], { cwd: llvmBuildDir })).then(() => 
+    ], { cwd: llvmBuildDir })).then(() =>
 
     util.run(MSBUILD, [
 
@@ -92,7 +92,7 @@ if (isWindows) p = p.then(() =>
         "/p:Configuration=Release",
         "/maxcpucount:" + cpus
 
-    ], { cwd: llvmBuildDir })).then(() => 
+    ], { cwd: llvmBuildDir })).then(() =>
 
     /* util.run(MSBUILD, [
 
@@ -110,7 +110,7 @@ if (isWindows) p = p.then(() =>
         "/p:Configuration=Release",
         "/maxcpucount:" + cpus
 
-    ], { cwd: binaryenBuildDir })).then(() => 
+    ], { cwd: binaryenBuildDir })).then(() =>
 
     util.run(MSBUILD, [
 
@@ -118,7 +118,7 @@ if (isWindows) p = p.then(() =>
         "/p:Configuration=Release",
         "/maxcpucount:" + cpus
 
-    ], { cwd: binaryenBuildDir })).then(() => 
+    ], { cwd: binaryenBuildDir })).then(() =>
 
     util.run(MSBUILD, [
 
@@ -126,7 +126,7 @@ if (isWindows) p = p.then(() =>
         "/p:Configuration=Release",
         "/maxcpucount:" + cpus
 
-    ], { cwd: binaryenBuildDir })).then(() => 
+    ], { cwd: binaryenBuildDir })).then(() =>
 
     util.run(MSBUILD, [
 
@@ -134,7 +134,7 @@ if (isWindows) p = p.then(() =>
         "/p:Configuration=Release",
         "/maxcpucount:" + cpus
 
-    ], { cwd: binaryenBuildDir })).then(() => 
+    ], { cwd: binaryenBuildDir })).then(() =>
 
     util.run(MSBUILD, [
 
@@ -157,7 +157,7 @@ if (isWindows) p = p.then(() =>
 
     });
 
-else p = p.then(() => 
+else p = p.then(() =>
 
     // Build all of LLVM
 

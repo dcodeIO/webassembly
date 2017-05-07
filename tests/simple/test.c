@@ -14,6 +14,14 @@ export int32_t add(int32_t a, int32_t b) {
   return b;
 }
 
+export void *_malloc(size_t size) {
+    return malloc(size);
+}
+
+export void _free(void* p) {
+    free(p);
+}
+
 int main() {
     // This is executed before returning to JavaScript and requires an initialized stack. Not exported.
     console_log("Hello from webassembly!");

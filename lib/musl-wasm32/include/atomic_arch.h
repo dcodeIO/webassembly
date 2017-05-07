@@ -1,3 +1,5 @@
+_Noreturn void abort (void);
+
 #define a_ctz_l a_ctz_l
 static inline int a_ctz_l(unsigned long x)
 {
@@ -120,10 +122,8 @@ static inline void a_spin()
 {
 }
 
-extern void _abort();
-
 #define a_crash a_crash
 static inline void a_crash()
 {
-  _abort();
+  abort();
 }

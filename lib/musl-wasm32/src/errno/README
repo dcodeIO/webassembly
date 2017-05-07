@@ -1,0 +1,2 @@
+Musl default is pulling the location from &__pthread_self()->errno_val,
+but there are no threads, yet.

@@ -1,0 +1,3 @@
+These arch headers are mostly equivalent to those used by emscripten
+with the exception that there are no attempts to implement atomics or
+pthreads. WebAssembly is all single-threaded, currently.

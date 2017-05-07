@@ -3,45 +3,51 @@
         {
             "name": "Mac",
             "includePath": [
-                "${workspaceRoot}/include",
-                "${workspaceRoot}/include/stdlib"
+                "${workspaceRoot}/lib/musl-wasm32/include",
+                "${workspaceRoot}/lib/musl/include",
+                "${workspaceRoot}/include"
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": "",
                 "path": [
-                    "${workspaceRoot}/include",
-                    "${workspaceRoot}/include/stdlib"
+                    "${workspaceRoot}/lib/musl-wasm32/include",
+                    "${workspaceRoot}/lib/musl/include",
+                    "${workspaceRoot}/include"
                 ]
             }
         },
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceRoot}/include",
-                "${workspaceRoot}/include/stdlib"
+                "${workspaceRoot}/lib/musl-wasm32/include",
+                "${workspaceRoot}/lib/musl/include",
+                "${workspaceRoot}/include"
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": "",
                 "path": [
-                    "${workspaceRoot}/include",
-                    "${workspaceRoot}/include/stdlib"
+                    "${workspaceRoot}/lib/musl-wasm32/include",
+                    "${workspaceRoot}/lib/musl/include",
+                    "${workspaceRoot}/include"
                 ]
             }
         },
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceRoot}/include",
-                "${workspaceRoot}/include/stdlib"
+                "${workspaceRoot}/lib/musl-wasm32/include",
+                "${workspaceRoot}/lib/musl/include",
+                "${workspaceRoot}/include"
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": "",
                 "path": [
-                    "${workspaceRoot}/include",
-                    "${workspaceRoot}/include/stdlib"
+                    "${workspaceRoot}/lib/musl-wasm32/include",
+                    "${workspaceRoot}/lib/musl/include",
+                    "${workspaceRoot}/include"
                 ]
             }
         }

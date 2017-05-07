@@ -48,20 +48,18 @@ exports.main = (argv, callback) => {
     var bindir = path.join("tools", "bin", platform);
 
     if (!argv.quiet)
-        process.stderr.write(chalk.bold.white("Disassembling on " + platform + " ...\n\n"));
+        util.printHeading("Disassembling on " + platform + " ...");
 
     var file = path.normalize(files[0]),
         out = argv.out && path.normalize(argv.out) || undefined;
 
     util.run(path.join(util.basedir, bindir, "wasm-dis"), [
+
+        file,
         [ argv.debug && "-d" || undefined ],
-        [ "-o", out ],
-        file
-    ], argv).then(() => {
+        [ "-o", out ]
 
-        finish();
-
-    }, callback);
+    ], argv).then(finish, callback);
 
     function finish() {
         if (!argv.quiet)

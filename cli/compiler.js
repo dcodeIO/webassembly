@@ -12,8 +12,6 @@ exports.main = (argv, callback) => {
     if (!callback)
         callback = util.defaultCallback;
 
-    // Define arguments
-
     argv = minimist(argv, {
         alias: {
             out: "o",
@@ -33,8 +31,6 @@ exports.main = (argv, callback) => {
         string: [ "out", "stack", "main", "headers", "include", "link", "define" ],
         boolean: [ "debug", "quiet", "optimize", "bare" ]
     });
-
-    // Validate arguments
 
     var files = argv._;
     if (files.length !== 1) {
@@ -58,7 +54,7 @@ exports.main = (argv, callback) => {
             "  -I, --headers    Includes C headers from the specified directories.",
             "  -i, --include    Includes the specified source files.",
          // "  -l, --link       Links in the specified libraries after compilation.",
-            "  -b, --bare       Does not include the runtime library.",
+            "  -b, --bare       Does not link against the runtime library / libc.",
             "",
             "usage: " + chalk.bold.cyan("wa-compile") + " [options] program.c",
             ""
@@ -72,7 +68,7 @@ exports.main = (argv, callback) => {
         return 3;
 
     if (!argv.quiet)
-        process.stderr.write(chalk.bold.white("Compiling on " + platform + " ...\n\n"));
+        util.printHeading("Compiling on " + platform + " ...");
 
     tmp.setGracefulCleanup();
 
@@ -83,11 +79,11 @@ exports.main = (argv, callback) => {
     temp.index = 0;
 
     var file = path.normalize(files[0]),
-        out = argv.out && path.normalize(argv.out) || undefined;
+        out  = argv.out && path.normalize(argv.out) || undefined;
 
     var defines = argv.define  && typeof argv.define  === "string" && [ argv.define  ] || argv.define  || [],
         headers = argv.headers && typeof argv.headers === "string" && [ argv.headers ] || argv.headers || [],
-        include = argv.include && typeof argv.include === "string" && [ argv.include ] || argv.include || [];
+        include = argv.include && typeof argv.include === "string" && [ argv.include ] || argv.include || [],
         links   = argv.link    && typeof argv.link    === "string" && [ argv.link    ] || argv.link    || [];
 
     var includeArgs = [];
@@ -95,8 +91,8 @@ exports.main = (argv, callback) => {
     includeArgs.push("-D", "WEBASSEMBLY");
     defines.forEach(def  => { includeArgs.push("-D", def); });
     includeArgs.push(
-        "-isystem", path.join(util.basedir, "lib/musl/include"),
         "-isystem", path.join(util.basedir, "lib/musl-wasm32/include"),
+        "-isystem", path.join(util.basedir, "lib/musl/include"),
         "-isystem", path.join(util.basedir, "include")
     );
     headers.forEach(file => { includeArgs.push("-I", file); });
@@ -130,7 +126,7 @@ exports.main = (argv, callback) => {
             "-o", temp[temp.index %= temp.length].name
         ], argv));
 
-    // Compile to assembly language
+    // Compile to assembly language (s)
 
     p = p.then(() =>
 
@@ -145,7 +141,7 @@ exports.main = (argv, callback) => {
         "-o", temp[temp.index %= temp.length].name
     ], argv)).then(() =>
 
-    // Convert to WebAssembly module
+    // Convert to a WebAssembly module
 
     util.run(path.join(util.bindir, "s2wasm"), [
         temp[temp.index++].name,
@@ -167,7 +163,7 @@ exports.main = (argv, callback) => {
 
     // If applicable, link with other webassembly modules and perform final optimizations
 
-    if (links.length)  { p = p.then(() => 
+    if (links.length)  { p = p.then(() =>
 
         util.run(path.join(util.bindir, "wasm-merge"), [
             links,
@@ -177,7 +173,7 @@ exports.main = (argv, callback) => {
             [ "-o", argv.optimize ? temp[temp.index %= temp.length].name : out ]
         ], argv));
 
-        if (argv.optimize) p = p.then(() => 
+        if (argv.optimize) p = p.then(() =>
 
             util.run(path.join(util.bindir, "wasm-opt"), [
                 temp[temp.index++].name,

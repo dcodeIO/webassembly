@@ -7,6 +7,3 @@
 
 WEBASSEMBLY_IMPORT unsigned int memoryBase;
 WEBASSEMBLY_IMPORT unsigned int tableBase;
-
-WEBASSEMBLY_IMPORT void _abort();
-WEBASSEMBLY_IMPORT void _grow();

@@ -1,0 +1,2 @@
+A custom implementation of the basic sbrk memory management system call
+tailored around clang's built-in wasm instructions.

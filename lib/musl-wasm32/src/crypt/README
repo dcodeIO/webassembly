@@ -1,0 +1,2 @@
+For some reason, musl's default implemetations import unistd.h,
+which introduces syscalls - but we don't have syscalls.

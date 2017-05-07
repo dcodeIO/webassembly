@@ -51,22 +51,20 @@ exports.main = (argv, callback) => {
         return 3;
 
     if (!argv.quiet)
-        process.stderr.write(chalk.bold.white("Linking on " + platform + " ...\n\n"));
+        util.printHeading("Linking on " + platform + " ...");
 
     files = files.map(file => path.normalize(file));
 
     var out = argv.out && path.normalize(argv.out) || undefined;
 
     util.run(path.join(util.bindir, "wasm-merge"), [
-        [ argv.debug && "--debug" || undefined ],
+
+        files,
         [ argv.optimize && "-O" || undefined ],
-        [ "-o", out ],
-        files
-    ], argv).then(() => {
+        [ argv.debug && "--debug" || undefined ],
+        [ "-o", out ]
 
-        finish();
-
-    }, callback);
+    ], argv).then(finish, callback);
 
     function finish() {
         if (!argv.quiet)

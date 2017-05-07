@@ -10,8 +10,6 @@ exports.main = (argv, callback) => {
     if (!callback)
         callback = util.defaultCallback;
 
-    // Define arguments
-
      argv = minimist(argv, {
         alias: {
             out: "o",
@@ -22,8 +20,6 @@ exports.main = (argv, callback) => {
         string: [ "out" ],
         boolean: [ "debug", "quiet", "optimize" ]
     });
-
-    // Validate arguments
 
     var files = argv._;
     if (files.length !== 1) {
@@ -53,21 +49,19 @@ exports.main = (argv, callback) => {
         return 3;
 
     if (!argv.quiet)
-        process.stderr.write(chalk.bold.white("Assembling on " + platform + " ...\n\n"));
+        util.printHeading("Assembling on " + platform + " ...");
 
     var file = path.normalize(files[0]),
         out = argv.out && path.normalize(argv.out) || undefined;
 
     util.run(path.join(util.bindir, "wasm-opt"), [
+
+        file,
         argv.optimize && optimizeFinal || [],
         [ argv.debug && "-d" || undefined ],
-        [ "-o", out ],
-        file
-    ], argv).then(() => {
+        [ "-o", out ]
 
-        finish();
-
-    }, callback);
+    ], argv).then(finish, callback);
 
     function finish() {
         if (!argv.quiet)

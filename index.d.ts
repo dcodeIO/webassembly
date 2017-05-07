@@ -1,5 +1,17 @@
+export interface IModule {
+
+    exports: { [key: string]: Function };
+    imports: { [key: string]: Function };
+    memory: IMemory;
+    env: { [key: string]: Function };
+
+}
+
 export interface IMemory {
+
     buffer: ArrayBuffer;
+    initial: number,
+    maximum?: number,
     U8: Uint8Array;
     U32: Uint32Array;
     S32: Int32Array;
@@ -12,20 +24,12 @@ export interface IMemory {
     getString(ptr: number): string;
 }
 
-export interface IEnvironment {
-    memory?: IMemory;
-}
-
-export interface IModule {
-    env: IEnvironment;
-    memory: IMemory;
-    exports: { [key: string]: Function };
-}
-
 type LoadOptions = {
+
     imports: { [key: string]: any },
     initialMemory?: number,
     maximumMemory?: number
+
 };
 
 export function load(file: string, options?: LoadOptions): Promise<IModule>;

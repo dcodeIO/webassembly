@@ -1,0 +1,2 @@
+This directory contains arch headers and a few overrides for musl. See
+the respective directories for additional information.

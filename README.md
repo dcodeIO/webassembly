@@ -2,7 +2,7 @@
 
 An **experimental**, minimal toolkit and runtime on top of node to produce and run [WebAssembly](http://webassembly.org) modules.
 
-To *run* compiled .wasm files, you'll either need a recent version of your browser [with WebAssembly enabled](http://caniuse.com/#feat=wasm) or [node.js 8 nightly](https://nodejs.org/download/nightly/) - but you probably already know that. For development, node.js 6 upwards is sufficient.
+To *run* compiled WebAssembly modules, you'll either need a recent version of your browser [with WebAssembly enabled](http://caniuse.com/#feat=wasm) or [node.js 8 nightly](https://nodejs.org/download/nightly/) - but you probably already know that. For development, node.js 6 upwards is sufficient.
 
 [![npm](https://img.shields.io/npm/v/webassembly.svg)](https://www.npmjs.com/package/webassembly) [![build status](https://travis-ci.org/dcodeIO/webassembly.svg?branch=master)](https://travis-ci.org/dcodeIO/webassembly) [![Code Climate](https://codeclimate.com/github/dcodeIO/webassembly/badges/gpa.svg)](https://codeclimate.com/github/dcodeIO/webassembly) [![npm downloads](https://img.shields.io/npm/dm/webassembly.svg)](https://www.npmjs.com/package/webassembly)
 
@@ -30,7 +30,7 @@ export int add(int a, int b) {
 Compile it to wasm:
 
 ```
-$> wa-compile -o program.wasm program.c
+$> wa compile -o program.wasm program.c
 ```
 
 Run it:
@@ -72,11 +72,9 @@ Available `LoadOptions`:
 
 C features available out of the box:
 
-* Various standard types (integers, booleans, floats) and corresponding constants
+* Stripped down standard C library based on musl and dlmalloc
 * `import` and `export` defines to mark your imports and exports
-* console methods become `console_log` etc. and Math becomes `Math_abs` etc.
-* `malloc`, `free`, `realloc` and `calloc` (dlmalloc)
-* `memcpy`, `memmove`, `memalign`, `memset` and `strlen` (musl)
+* Browser bindings for `console` and `Math` (i.e `console.log` becomes `console_log`)
 
 Console functions accept the following string substitutions with variable arguments:
 
@@ -88,7 +86,7 @@ Console functions accept the following string substitutions with variable argume
 | `%lf`      | `double`                    | 64 bit double
 | `%s`       | `char *`                    | String (zero terminated)
 
-For now, math is (mostly) performed on 64 bit IEEE754 floating point operands as provided by the browser.
+Browser `Math` (i.e. `Math_sqrt`) as well as standard C `math.h` can be used.
 
 On the JS side of things, the [memory instance](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Memory) (`module.memory`) has additional mixed in utility methods for convenient memory access:
 
@@ -171,11 +169,13 @@ The `wa-assemble` utility (also callable as `wa assemble`, `wa as`, `wa a`) asse
 usage: wa-assemble [options] program.wast
 ```
 
+The `wa` utility proxies to the above, in case you don't like typing `-`.
+
 Command line utilites can also be used programmatically by providing command line arguments and a callback to their respective `main` functions:
 
 ```js
-var compiler = require("webassembly/cli/compiler"); // or assembler, disassembler
-
+var compiler = require("webassembly/cli/compiler");
+               // or assembler, disassembler, linker
 compiler.main([
   "-o", "program.wasm",
   "program.c"

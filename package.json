@@ -14,7 +14,6 @@
     "wasm"
   ],
   "dependencies": {
-    "@protobufjs/inquire": "^1.1.0",
     "archiver": "^1.3.0",
     "chalk": "^1.1.3",
     "extract-zip": "^1.6.5",
@@ -30,7 +29,7 @@
     "eslint": "^3.19.0",
     "exorcist": "^0.4.0",
     "tap": "^10.3.2",
-    "uglifyjs": "^2.4.10"
+    "uglifyjs": "git+https://github.com/mishoo/UglifyJS2.git#harmony"
   },
   "main": "index",
   "bin": {
@@ -44,7 +43,7 @@
     "test": "node tests",
     "lint": "eslint src/**.js cli/**.js scripts/**.js -c config/eslint.json",
     "build": "browserify src --no-builtins --plugin bundle-collapser/plugin --debug | exorcist dist/webassembly.js.map > dist/webassembly.js",
-    "minify": "uglifyjs dist/webassembly.js -c -m --top-level ---in-source-map dist/webassembly.js.map --source-map dist/webassembly.min.js.map > dist/webassembly.min.js",
+    "minify": "uglifyjs dist/webassembly.js -c -m toplevel --source-map content=dist/webassembly.js.map,url=webassembly.min.js.map -o dist/webassembly.min.js",
     "make": "npm run build && npm run minify",
     "postinstall": "node scripts/setup"
   }
