@@ -1,6 +1,3 @@
-webassembly-*.tgz
 node_modules/
 npm-debug.*
-sandbox/
-tools/bin/*
-!tools/bin/LICENSE*
+webassembly-*.tgz

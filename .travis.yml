@@ -7,4 +7,6 @@ branches:
   only: master
 git:
   submodules: false
+before_install:
+  - git submodule update --init lib/musl
 script: npm test

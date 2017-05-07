@@ -1,5 +1,6 @@
 #include <webassembly.h>
 #include <math.h>
+#include <malloc.h>
 
 export int32_t add(int32_t a, int32_t b) {
     return a + b;
@@ -16,6 +17,6 @@ export int32_t add(int32_t a, int32_t b) {
 int main() {
     // This is executed before returning to JavaScript and requires an initialized stack. Not exported.
     console_log("Hello from webassembly!");
-    console_log("Did you know that the sine of %lf is %lf?", M_PI, sin(M_PI));
+    console_log("Did you know that the sine of %lf is %lf in C / %lf in JS?", M_PI, sin(M_PI), Math_sin(Math_PI));
     return 0;
 }

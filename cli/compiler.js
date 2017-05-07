@@ -110,6 +110,7 @@ exports.main = (argv, callback) => {
         file,
         "-S",
         argv.bare || links.length || !argv.optimize ? undefined : "-O",
+        "--target=wasm32-unknown-unknown",
         "-emit-llvm",
         "-nostdinc",
         "-nostdlib",

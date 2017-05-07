@@ -9,9 +9,10 @@ var https = require('follow-redirects').https,
     pkg   = require("../package.json");
 
 var platform = process.platform + "-" + process.arch,
+    isWindows = /^win32/.test(platform),
     temp = tmp.fileSync({ prefix: "wa-tools-" }),
     file = fs.createWriteStream(temp.name),
-    archive = "tools-" + platform + (/^win32/.test(platform) ? ".zip" : ".tar.gz");
+    archive = "tools-" + platform + (isWindows ? ".zip" : ".tar.gz");
 
 function download(callback) {
     var req = https.get("https://github.com/dcodeIO/webassembly/releases/download/" + pkg.tools + "/" + archive, res => {
@@ -47,7 +48,7 @@ function download(callback) {
 
 function install(file, callback) {
     fs.mkdir(util.bindir, function() {
-        if (/\.zip$/.test(archive))
+        if (isWindows)
             unzip(file, { dir: util.bindir }, callback);
         else
             targz().extract(file, util.bindir, callback);

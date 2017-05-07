@@ -198,11 +198,13 @@ I am using:
 
 ---
 
-License: [BSD 3-Clause License](https://opensource.org/licenses/BSD-3-Clause).
+License: [MIT License](https://opensource.org/licenses/MIT).
 
 Includes parts of
+
 * [musl](http://www.musl-libc.org/) ([MIT License](https://opensource.org/licenses/MIT))
 * [dlmalloc](http://g.oswego.edu/dl/html/malloc.html) ([CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/))
 * [binaryen](https://github.com/WebAssembly/binaryen) ([Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0))
+* [emscripten](https://kripken.github.io/emscripten-site/) ([NCSA](https://opensource.org/licenses/NCSA) / [MIT License](https://opensource.org/licenses/MIT))
 
-WebAssembly logo by Carlos Baraza ([CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)).
+WebAssembly logo by [Carlos Baraza](https://github.com/carlosbaraza) ([CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)).

@@ -33,7 +33,7 @@ util.run(process.env.CMAKE || "cmake", [
     "-DLLVM_INCLUDE_TESTS=OFF",
     "-DLLVM_INCLUDE_EXAMPLES=OFF",
     "-DLLVM_ENABLE_PROJECTS=clang;compiler-rt", /* ;lld */
-    isWindows ? undefined : "-DCMAKE_EXE_LINKER_FLAGS=\"-static-libgcc -static-libstdc++\"",
+    isWindows ? undefined : "-DCMAKE_EXE_LINKER_FLAGS=-static-libgcc -static-libstdc++",
     llvmSourceDir
 
 ], { cwd: llvmBuildDir }).then(() =>
@@ -162,8 +162,8 @@ else p = p.then(() =>
 
     util.run(process.env.MAKE || "make", [
 
-        "-j" + cpus,
-        "cmake", "llvm-link", "llc"/*, "lld"*/
+        "clang", "llvm-link", "llc"/*, "lld"*/,
+        "-j" + cpus
 
     ], { cwd: llvmBuildDir })).then(() =>
 
@@ -171,8 +171,8 @@ else p = p.then(() =>
 
     util.run(process.env.MAKE || "make", [
 
-        "-j" + cpus,
-        "s2wasm", "wasm-opt", "wasm-as", "wasm-dis", "wasm-merge"
+        "s2wasm", "wasm-opt", "wasm-as", "wasm-dis", "wasm-merge",
+        "-j" + cpus
 
     ], { cwd: binaryenBuildDir })).then(() => {
 
@@ -195,20 +195,21 @@ else p = p.then(() =>
 
 p.then((files) => new Promise((resolve, reject) => {
 
-    files.push(
+    var textFiles = [
         path.join(util.basedir, "tools/bin/LICENSE-BINARYEN"),
         path.join(util.basedir, "tools/bin/LICENSE-LLVM")
-    );
+    ];
 
     var output = fs.createWriteStream(path.join(util.basedir, "tools", "bin", "tools-" + process.platform + "-" + process.arch + (isWindows ? ".zip" : ".tar.gz")));
     var archive = isWindows
-        ? archiver("zip", { zlib: 9 })
-        : archiver("tar", { zlib: 9, gzip: true });
+        ? archiver("zip", { zlib: { level: 9 } })
+        : archiver("tar", { gzip: true, gzipOptions: { level: 9 } });
     output.on("error", reject);
     archive.on("error", reject);
     output.on("close", () => resolve());
     archive.pipe(output);
-    files.forEach(file => archive.append(fs.createReadStream(file), { name: path.basename(file) }));
+    files.forEach(file => archive.append(fs.createReadStream(file), { name: path.basename(file), mode: 0755 }));
+    textFiles.forEach(file => archive.append(fs.createReadStream(file), { name: path.basename(file) }));
     archive.finalize();
 
 })).then(util.defaultSuccess, util.defaultCallback);
