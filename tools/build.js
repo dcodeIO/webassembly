@@ -43,6 +43,7 @@ util.run(process.env.CMAKE || "cmake", [
 util.run(process.env.CMAKE || "cmake", [
 
     "-DCMAKE_BUILD_TYPE=Release",
+    isWindows ? undefined : "-DCMAKE_EXE_LINKER_FLAGS=-static-libgcc -static-libstdc++",
     binaryenSourceDir
 
 ], { cwd: binaryenBuildDir }));
@@ -199,6 +200,8 @@ p.then((files) => new Promise((resolve, reject) => {
         path.join(util.basedir, "tools/bin/LICENSE-BINARYEN"),
         path.join(util.basedir, "tools/bin/LICENSE-LLVM")
     ];
+
+    process.stderr.write("\nArchiving ...\n\n");
 
     var output = fs.createWriteStream(path.join(util.basedir, "tools", "bin", "tools-" + process.platform + "-" + process.arch + (isWindows ? ".zip" : ".tar.gz")));
     var archive = isWindows

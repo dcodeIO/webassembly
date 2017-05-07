@@ -108,8 +108,8 @@ exports.main = (argv, callback) => {
 
     util.run(path.join(util.bindir, "clang"), [
         file,
-        "-S",
         argv.bare || links.length || !argv.optimize ? undefined : "-O",
+        "-c",
         "--target=wasm32-unknown-unknown",
         "-emit-llvm",
         "-nostdinc",
@@ -139,6 +139,9 @@ exports.main = (argv, callback) => {
         "-march=wasm32",
         "-filetype=asm",
         "-asm-verbose=false",
+        "-thread-model=single",
+        "-data-sections",
+        "-function-sections",
         "-o", temp[temp.index %= temp.length].name
     ], argv)).then(() =>
 

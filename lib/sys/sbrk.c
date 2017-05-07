@@ -7,6 +7,8 @@ extern void _grow();
 static unsigned int available = 0;
 
 void *sbrk(int increment) {
+    // malloc actually increments in proper page sizes,
+    // so the following is merely there to make sure.
     if (increment < 0)
         return (void *)-1;
     unsigned int total = current_memory << 16;
