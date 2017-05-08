@@ -11,8 +11,7 @@ sandbox/
 tests/
 tools/**
 !tools/bin/
-lib/musl/**
-!lib/musl/include/**
+lib/musl/
 lib/musl-wasm32/**
-!lib/musl-wasm32/include/**
+!lib/musl-wasm32/include/bits/*.h
 lib/build*

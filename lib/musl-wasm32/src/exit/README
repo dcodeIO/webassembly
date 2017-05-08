@@ -1,0 +1,2 @@
+This implementation proxies abort() to _abort(errno) and exit(code) to _exit(code)
+on the JS side. There, both can be overridden by imports named _abort or _exit.

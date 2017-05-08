@@ -1,0 +1,52 @@
+This directory contains includes for WebAssembly specific functionality:
+
+<webassembly.h>             Convenience header
+<webassembly/console.h>     Browser console bindings
+<webassembly/math.h>        Browser math bindings
+<webassembly/memory.h>      Internal memory bindings
+<webassembly/module.h>      Module definitions
+
+It also contains includes for the underlying, freestanding, musl-based
+implementation of the C standard library:
+
+<float.h>
+<iso646.h>
+<limits.h>
+<stdalign.h>
+<stdarg.h>
+<stdbool.h>
+<stddef.h>
+<stdint.h>
+<stdnoreturn.h>
+
+Additional headers that would be part of a hosted implementation, if
+this'd be one, are:
+
+<assert.h>
+<complex.h>
+<ctype.h>
+<errno.h>
+<fenv.h>
+<inttypes.h>
+<locale.h>
+<math.h>
+<wchar.h>
+<wctype.h>
+
+Other (non-standard) headers are:
+
+<alloca.h>
+<byteswap.h>
+<crypt.h>
+<endian.h>
+<features.h>
+<iconv.h>
+<malloc.h>
+<memory.h>
+<regex.h>
+<search.h>
+<stdlib.h> partial
+<string.h>
+<strings.h>
+<sys/param.h> without <resources.h>
+<values.h>

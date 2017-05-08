@@ -29,7 +29,7 @@ exports.main = (argv, callback) => {
             bare: "b"
         },
         string: [ "out", "stack", "main", "headers", "include", "link", "define" ],
-        boolean: [ "debug", "quiet", "optimize", "bare" ]
+        boolean: [ "debug", "quiet", "optimize", "bare", "internal" ]
     });
 
     var files = argv._;
@@ -90,9 +90,12 @@ exports.main = (argv, callback) => {
 
     includeArgs.push("-D", "WEBASSEMBLY");
     defines.forEach(def  => { includeArgs.push("-D", def); });
+    if (argv.internal)
+        includeArgs.push(
+            "-isystem", path.join(util.basedir, "lib/musl-wasm32/include"),
+            "-isystem", path.join(util.basedir, "lib/musl/include")
+        );
     includeArgs.push(
-        "-isystem", path.join(util.basedir, "lib/musl-wasm32/include"),
-        "-isystem", path.join(util.basedir, "lib/musl/include"),
         "-isystem", path.join(util.basedir, "include")
     );
     headers.forEach(file => { includeArgs.push("-I", file); });

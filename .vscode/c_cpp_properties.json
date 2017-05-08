@@ -3,16 +3,12 @@
         {
             "name": "Mac",
             "includePath": [
-                "${workspaceRoot}/lib/musl-wasm32/include",
-                "${workspaceRoot}/lib/musl/include",
                 "${workspaceRoot}/include"
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": "",
                 "path": [
-                    "${workspaceRoot}/lib/musl-wasm32/include",
-                    "${workspaceRoot}/lib/musl/include",
                     "${workspaceRoot}/include"
                 ]
             }
@@ -20,16 +16,12 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceRoot}/lib/musl-wasm32/include",
-                "${workspaceRoot}/lib/musl/include",
                 "${workspaceRoot}/include"
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": "",
                 "path": [
-                    "${workspaceRoot}/lib/musl-wasm32/include",
-                    "${workspaceRoot}/lib/musl/include",
                     "${workspaceRoot}/include"
                 ]
             }
@@ -37,16 +29,12 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceRoot}/lib/musl-wasm32/include",
-                "${workspaceRoot}/lib/musl/include",
                 "${workspaceRoot}/include"
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": "",
                 "path": [
-                    "${workspaceRoot}/lib/musl-wasm32/include",
-                    "${workspaceRoot}/lib/musl/include",
                     "${workspaceRoot}/include"
                 ]
             }
