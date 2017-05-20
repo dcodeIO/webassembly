@@ -1,0 +1,7 @@
+<script src="../../dist/webassembly.min.js"></script>
+<script>
+webassembly.load("helloworld.wasm").then(function(module) {
+    var {greeting} = module.exports;
+    greeting();
+});
+</script>
