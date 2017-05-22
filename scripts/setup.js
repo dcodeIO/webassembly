@@ -8,6 +8,11 @@ var https = require('follow-redirects').https,
     util  = require("../cli/util"),
     pkg   = require("../package.json");
 
+if (fs.existsSync(util.bindir)) {
+    process.stdout.write(chalk.white.bold("Already have binaries, skipping download...") + "\n");
+    process.exit(0);
+}
+
 var platform = process.platform + "-" + process.arch,
     isWindows = /^win32/.test(platform),
     temp = tmp.fileSync({ prefix: "wa-tools-" }),
