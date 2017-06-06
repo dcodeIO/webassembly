@@ -1,0 +1,23 @@
+{
+  "name": "wasm-play",
+  "version": "0.1.0",
+  "scripts": {
+    "prestart": "mkdir dist || true",
+    "start": "concurrently --kill-others \"webpack -w\" \"npm run wasm-watch\" \"serve dist\"",
+    "build": "webpack && npm run wasm",
+    "wasm-watch": "watch \"npm run wasm\" src/c",
+    "wasm": "wa compile -o dist/program.wasm src/c/program.c"
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "concurrently": "^3.4.0",
+    "html-webpack-plugin": "^2.28.0",
+    "serve": "^5.2.1",
+    "watch": "^1.0.2",
+    "webpack": "^2.6.1"
+  },
+  "dependencies": {
+    "webassembly": "^0.11.0"
+  }
+}
