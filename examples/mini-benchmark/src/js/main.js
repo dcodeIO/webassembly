@@ -5,8 +5,14 @@ const bench = 1000000;
 
 (async function() {
   try {
+    /**
+     * Destructure add func from WASM file.
+     */
     const { exports: { add } } = await wasm.load("program.wasm");
 
+    /**
+     * JavaScript benchmark.
+     */
     let start = new Date().getTime();
     for (let e = 0; e < bench; e++) {
       const result = numOne + numTwo;
@@ -14,6 +20,9 @@ const bench = 1000000;
     let end = new Date().getTime();
     const timeOne = end - start;
 
+    /**
+     * WebAssembly benchmark.
+     */
     start = new Date().getTime();
     for (e = 0; e < bench; e++) {
       const result = add(numOne, numTwo);
@@ -21,6 +30,9 @@ const bench = 1000000;
     end = new Date().getTime();
     const timeTwo = end - start;
 
+    /**
+     * Display results.
+     */
     if (timeOne > timeTwo) {
       alert(`WASM was faster by ${Math.round(timeOne / timeTwo * 100)}%`);
     } else {
