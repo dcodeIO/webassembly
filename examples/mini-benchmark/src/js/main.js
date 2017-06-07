@@ -1,14 +1,19 @@
-const wasm = require("webassembly");
+import { load } from "webassembly";
 const numOne = 1;
 const numTwo = 2;
 const bench = 1000000;
 
-(async function() {
+/**
+ * Add two values one million times
+ * in both JavaScript and WebAssembly.
+ * Display results when done.
+ */
+async function benchmark() {
   try {
     /**
-     * Destructure add func from WASM file.
+     * Desctruct add function from WebAssembly.
      */
-    const { exports: { add } } = await wasm.load("program.wasm");
+    const { exports: { add } } = await load("program.wasm");
 
     /**
      * JavaScript benchmark.
@@ -24,7 +29,7 @@ const bench = 1000000;
      * WebAssembly benchmark.
      */
     start = new Date().getTime();
-    for (e = 0; e < bench; e++) {
+    for (let e = 0; e < bench; e++) {
       const result = add(numOne, numTwo);
     }
     end = new Date().getTime();
@@ -33,12 +38,16 @@ const bench = 1000000;
     /**
      * Display results.
      */
+    const result = (first, second) => Math.round((first / second - 1) * 100);
+
     if (timeOne > timeTwo) {
-      alert(`WASM was faster by ${Math.round(timeOne / timeTwo * 100)}%`);
+      alert(`WASM was faster by ${result(timeOne, timeTwo)}%`);
     } else {
-      alert(`JavaScript was faster by ${Math.round(timeTwo / timeOne * 100)}%`);
+      alert(`JavaScript was faster by ${result(timeTwo, timeOne)}%`);
     }
   } catch (err) {
-    alert("Erroring loading wasm");
+    alert("WebAssembly could not be loaded.");
   }
-})();
+}
+
+benchmark();
