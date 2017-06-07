@@ -1,7 +1,6 @@
 const htmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: "./src/js/main.js",
   entry: `${process.cwd()}/src/js/main.js`,
   output: {
     path: `${process.cwd()}/dist`,

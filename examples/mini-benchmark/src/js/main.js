@@ -1,4 +1,4 @@
-import { load } from "webassembly";
+const wasm = require("webassembly");
 const numOne = 1;
 const numTwo = 2;
 const bench = 1000000;
@@ -13,7 +13,7 @@ async function benchmark() {
     /**
      * Desctruct add function from WebAssembly.
      */
-    const { exports: { add } } = await load("program.wasm");
+    const { exports: { add } } = await wasm.load("program.wasm");
 
     /**
      * JavaScript benchmark.
