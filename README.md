@@ -2,7 +2,7 @@
 
 An **experimental**, minimal toolkit and runtime on top of node to produce and run [WebAssembly](http://webassembly.org) modules.
 
-To *run* compiled WebAssembly modules, you'll either need a recent version of your browser [with WebAssembly enabled](http://caniuse.com/#feat=wasm) or [node.js 8 nightly](https://nodejs.org/download/nightly/) - but you probably already know that. For development, node.js 6 upwards is sufficient.
+To *run* compiled WebAssembly modules, you'll either need a recent version of your browser [with WebAssembly enabled](http://caniuse.com/#feat=wasm) or node.js 8 - but you probably already know that. For development, node.js 6 upwards is sufficient.
 
 [![npm](https://img.shields.io/npm/v/webassembly.svg)](https://www.npmjs.com/package/webassembly) [![build status](https://travis-ci.org/dcodeIO/webassembly.svg?branch=master)](https://travis-ci.org/dcodeIO/webassembly) [![Code Climate](https://codeclimate.com/github/dcodeIO/webassembly/badges/gpa.svg)](https://codeclimate.com/github/dcodeIO/webassembly) [![npm downloads](https://img.shields.io/npm/dm/webassembly.svg)](https://www.npmjs.com/package/webassembly)
 
