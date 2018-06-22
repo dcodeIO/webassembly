@@ -107,7 +107,7 @@ exports.main = (argv, callback) => {
 
     util.run(path.join(util.bindir, "clang"), [
         file,
-        argv.bare || links.length || !argv.optimize ? undefined : "-O",
+        (argv.bare && !argv.optimize) || links.length || !argv.optimize ? undefined : "-O3",
         "-c",
         "--target=wasm32-unknown-unknown",
         "-emit-llvm",
