@@ -1,0 +1,11 @@
+--- webassembly.wat	2018-07-06 12:52:04.091713722 -0400
++++ webassembly_export.wat	2018-07-06 12:51:59.055733328 -0400
+@@ -4,6 +4,8 @@
+  (import "env" "_abort" (func $_abort (param i32)))
+  (import "env" "_grow" (func $_grow))
+  (import "env" "memory" (memory $0 1))
++ (export "malloc" (func $malloc))
++ (export "free" (func $free)) 
+  (table 0 anyfunc)
+  (data (i32.const 12) "\00\00\00\00")
+  (data (i32.const 512) "\00\00\00\00")
