@@ -47,8 +47,16 @@ require("webassembly")
 Installation
 ------------
 
+As a dependency:
+
 ```
 $> npm install webassembly
+```
+
+OR to use globally with "wa compile":
+
+```
+$> npm install -g webassembly
 ```
 
 Installing the package automatically downloads prebuilt binaries for either Windows (`win32-x64`) or Linux (`linux-x64`).
