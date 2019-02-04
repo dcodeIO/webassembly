@@ -1,3 +1,6 @@
 node_modules/
 npm-debug.*
 webassembly-*.tgz
+examples/mini-benchmark/node_modules
+examples/mini-benchmark/dist
+.DS_Store
