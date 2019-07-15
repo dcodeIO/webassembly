@@ -32,6 +32,7 @@
     "uglifyjs": "git+https://github.com/mishoo/UglifyJS2.git#harmony"
   },
   "main": "index",
+  "browser": "src/browser",
   "bin": {
     "wa": "bin/wa",
     "wa-compile": "bin/wa-compile",
