@@ -220,7 +220,13 @@ function load_buffer(assembly, options) {
 exports.load_buffer = load_buffer;
 
 exports.load = function( filename, options ) {
-  return fetch(file)
+  return ('function' === typeof fetch && fetch || fetch_node)(file)
     .then(result => result.arrayBuffer())
     .then(buffer => load_buffer(buffer, options));
 };
+
+// Internal fetch API polyfill for node that doesn't trigger webpack
+var fs;
+function fetch_node(file) {
+    return new Promise((resolve, reject) => (fs || (fs = eval("equire".replace(/^/, "r"))("fs"))).readFile(file, (err, data) => err ? reject(err) : resolve({ arrayBuffer: () => data })));
+}
