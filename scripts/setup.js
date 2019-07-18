@@ -13,11 +13,26 @@ if (fs.existsSync(util.bindir)) {
     process.exit(0);
 }
 
-var platform = process.platform + "-" + process.arch,
+var platform  = process.platform + "-" + process.arch,
     isWindows = /^win32/.test(platform),
-    temp = tmp.fileSync({ prefix: "wa-tools-" }),
-    file = fs.createWriteStream(temp.name),
-    archive = "tools-" + platform + (isWindows ? ".zip" : ".tar.gz");
+    temp      = tmp.fileSync({ prefix: "wa-tools-" }),
+    file      = fs.createWriteStream(temp.name),
+    archive   = "tools-" + platform + (isWindows ? ".zip" : ".tar.gz");
+
+function cachedDownload(callback) {
+  var tmpDir    = ['','tmp'].join(path.sep);
+  var cacheDir  = [tmpDir,'webassembly',pkg.tools].join(path.sep);
+  var cacheFile = [cacheDir,archive].join(path.sep);
+  if (fs.existsSync(cacheFile)) return callback(null,cacheFile);
+  if (!fs.existsSync(tmpDir)) return download(callback);
+  fs.mkdirSync(cacheDir, { recursive: true });
+
+  download(function(err, filename) {
+    if (err) return callback(err);
+    fs.copyFileSync(filename,cacheFile);
+    return callback(null,filename);
+  });
+}
 
 function download(callback) {
     var req = https.get("https://github.com/dcodeIO/webassembly/releases/download/" + pkg.tools + "/" + archive, res => {
@@ -62,7 +77,7 @@ function install(file, callback) {
 
 util.printLogo("Setup");
 process.stdout.write(chalk.white.bold("Downloading binaries for " + platform + " ...") + "\n");
-download(function(err, file) {
+cachedDownload(function(err, file) {
     if (err) {
         process.stderr.write("\n");
         throw err;

@@ -35,11 +35,13 @@ var getOwnPropertyNames = Object.getOwnPropertyNames;
 
 /**
  * Loads a WebAssembly.
- * @param {string} file File name
- * @param {LoadOptions} [options] Options
+ *
+ * @param {Buffer}       assembly   WebAssembly buffer
+ * @param {LoadOptions}  [options]  Options
+ *
  * @returns {Promise.<IModule>} Promise resolving to the instantiated module
  */
-function load(file, options) {
+function load_buffer(assembly, options) {
 
     /**
      * Options as used by {@link load}.
@@ -198,16 +200,15 @@ function load(file, options) {
     // Add default exit listeners if not explicitly imported
 
     if (!env._abort)
-        env._abort = errno => { throw Error("abnormal abort in " + file + ": " + errno); };
+        env._abort = errno => { throw Error("abnormal abort: " + errno); };
     if (!env._exit)
-        env._exit = code => { if (code) throw Error("abnormal exit in " + file + ": " + code); }
+        env._exit = code => { if (code) throw Error("abnormal exit: " + code); }
 
     // Finally, fetch the assembly and instantiate it
 
     env._grow = grow;
 
-    return (typeof fetch === "function" && fetch || fetch_node)(file)
-        .then(result => result.arrayBuffer())
+    return Promise.resolve(Buffer.from(assembly))
         .then(buffer => WebAssembly.instantiate(buffer, { env: env }))
         .then(module => {
             var instance = module.instance;
@@ -218,7 +219,21 @@ function load(file, options) {
         });
 }
 
-exports.load = load;
+exports.load_buffer = load_buffer;
+
+/**
+ * Loads a WebAssembly.
+ *
+ * @param {string}       filename   The file to load
+ * @param {LoadOptions}  [options]  Options
+ *
+ * @returns {Promise.<IModule>} Promise resolving to the instantiated module
+ */
+exports.load = function( filename, options ) {
+  return ('function' === typeof fetch && fetch || fetch_node)(filename)
+    .then(result => result.arrayBuffer())
+    .then(buffer => load_buffer(buffer, options));
+};
 
 // Internal fetch API polyfill for node that doesn't trigger webpack
 var fs;
