@@ -200,9 +200,9 @@ function load_buffer(assembly, options) {
     // Add default exit listeners if not explicitly imported
 
     if (!env._abort)
-        env._abort = errno => { throw Error("abnormal abort in " + file + ": " + errno); };
+        env._abort = errno => { throw Error("abnormal abort: " + errno); };
     if (!env._exit)
-        env._exit = code => { if (code) throw Error("abnormal exit in " + file + ": " + code); }
+        env._exit = code => { if (code) throw Error("abnormal exit: " + code); }
 
     // Finally, fetch the assembly and instantiate it
 
@@ -230,7 +230,7 @@ exports.load_buffer = load_buffer;
  * @returns {Promise.<IModule>} Promise resolving to the instantiated module
  */
 exports.load = function( filename, options ) {
-  return ('function' === typeof fetch && fetch || fetch_node)(file)
+  return ('function' === typeof fetch && fetch || fetch_node)(filename)
     .then(result => result.arrayBuffer())
     .then(buffer => load_buffer(buffer, options));
 };
