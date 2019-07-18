@@ -35,8 +35,10 @@ var getOwnPropertyNames = Object.getOwnPropertyNames;
 
 /**
  * Loads a WebAssembly.
+ *
  * @param {Buffer}       assembly   WebAssembly buffer
  * @param {LoadOptions}  [options]  Options
+ *
  * @returns {Promise.<IModule>} Promise resolving to the instantiated module
  */
 function load_buffer(assembly, options) {
@@ -219,6 +221,14 @@ function load_buffer(assembly, options) {
 
 exports.load_buffer = load_buffer;
 
+/**
+ * Loads a WebAssembly.
+ *
+ * @param {string}       filename   The file to load
+ * @param {LoadOptions}  [options]  Options
+ *
+ * @returns {Promise.<IModule>} Promise resolving to the instantiated module
+ */
 exports.load = function( filename, options ) {
   return ('function' === typeof fetch && fetch || fetch_node)(file)
     .then(result => result.arrayBuffer())
